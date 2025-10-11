@@ -21,7 +21,18 @@ Learn to build, extend, and customize MCP servers with:
 
 ## 📚 Quick Start
 
-### 🚀 Automated Setup (Recommended - 2 minutes)
+### � Step 1: Download the Repository
+
+1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions**
+2. Click the green **"Code"** button
+3. Select **"Download ZIP"**
+4. Extract the ZIP file to your desired location
+5. Open a terminal and navigate to the extracted folder:
+   ```bash
+   cd Workshop-MCP-Server-Directions-main
+   ```
+
+### �🚀 Step 2: Automated Setup (Recommended - 2 minutes)
 
 **For Windows PowerShell:**
 ```powershell

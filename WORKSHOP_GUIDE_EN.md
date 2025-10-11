@@ -391,7 +391,20 @@ if __name__ == "__main__":
 
 ## 📝 Step-by-Step Instructions
 
-### Option A: Automated Setup (Recommended) ⚡
+### Step 1: Download the Repository 📥
+
+1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions**
+2. Click the green **"Code"** button
+3. Select **"Download ZIP"**
+4. Extract the ZIP file to your desired location
+5. Open a terminal and navigate to the extracted folder:
+   ```bash
+   cd Workshop-MCP-Server-Directions-main
+   ```
+
+### Step 2: Choose Your Setup Method
+
+#### Option A: Automated Setup (Recommended) ⚡
 
 **For Windows Users:**
 ```powershell
