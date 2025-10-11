@@ -19,7 +19,41 @@ Learn to build, extend, and customize MCP servers with:
 
 ---
 
-## 📚 Quick Start
+## 📋 Prerequisites
+
+Before starting the workshop, ensure you have:
+
+### Required:
+- 🐍 **Python 3.12 or higher** installed ([Download here](https://www.python.org/downloads/))
+- 💻 **Claude Desktop** app installed ([Download here](https://claude.ai/download))
+- 📦 Basic command line knowledge (terminal/PowerShell)
+
+### Required for Business Central Integration (Workshop Objective):
+- 🏭 **Azure AD Tenant** with Business Central access
+- � **Business Central Environment** with Standard API v2.0 enabled:
+  - Sandbox or Production environment
+  - API endpoints: `/api/v2.0/companies`, `/items`, `/customers`, `/salesOrders`, etc.
+  - Company name and Environment name
+- 🚀 **Azure AD App Registration** configured:
+  - Client ID, Client Secret, Tenant ID
+  - API permissions for Business Central (Dynamics 365 Business Central)
+  - Redirect URI configured (if needed)
+
+### Alternative (Only if BC access is not available):
+- 🧪 **Mock Data Mode**: The workshop includes mock data as a fallback
+  - Allows completing exercises without real BC connection
+  - Limited to testing MCP protocol mechanics
+  - Does not demonstrate real authentication or API integration
+  - **Not recommended** for full workshop experience
+
+### Good to Know:
+- ✅ Virtual environment setup is automated via scripts
+- ✅ All Python dependencies are listed in `requirements.txt`
+- 🧪 Mock data available **only as fallback** if BC access unavailable
+
+---
+
+## �📚 Quick Start
 
 ### 📥 Step 1: Download the Repository
 

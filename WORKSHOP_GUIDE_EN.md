@@ -389,7 +389,83 @@ if __name__ == "__main__":
 
 ---
 
-## 📝 Step-by-Step Instructions
+## � Prerequisites
+
+Before starting the workshop, ensure you have the following:
+
+### ✅ Required Software:
+
+1. **Python 3.12 or higher**
+   - Download: [python.org/downloads](https://www.python.org/downloads/)
+   - Verify: `python --version` or `python3 --version`
+   - Make sure to add Python to PATH during installation (Windows)
+
+2. **Claude Desktop**
+   - Download: [claude.ai/download](https://claude.ai/download)
+   - Install and create an account if you don't have one
+   - Verify it runs successfully before the workshop
+
+3. **Command Line Tool**
+   - Windows: PowerShell or Command Prompt
+   - macOS/Linux: Terminal
+   - Basic knowledge of navigating folders and running commands
+
+### 🏭 Required for Business Central Integration (Workshop Objective):
+
+> ⚠️ **Important**: This workshop is designed to work with **real Business Central environments**. The following setup is essential for the full workshop experience.
+
+- **Azure AD Tenant** with Business Central access
+- **Business Central Environment** (Sandbox or Production):
+  - **Environment name** (e.g., "Production", "Sandbox")
+  - **Company name** (e.g., "CRONUS USA, Inc.")
+  - **API base URL** (e.g., `https://api.businesscentral.dynamics.com/v2.0/{tenant-id}/{environment}/api/v2.0/`)
+  - **Standard API v2.0 enabled** with available endpoints:
+    - `/companies` - List of companies
+    - `/items` - Item master data
+    - `/customers` - Customer information
+    - `/salesOrders` - Sales order documents
+    - Other standard entities as needed
+
+- **Azure AD App Registration**:
+  - **Client ID** (Application ID)
+  - **Client Secret** (Application Secret)
+  - **Tenant ID** (Directory ID)
+  - **API Permissions** configured:
+    - Dynamics 365 Business Central API access
+    - Delegated permissions or Application permissions
+  - **Redirect URI** (if using interactive authentication)
+
+### 🧪 Alternative: Mock Data Mode (Not Recommended)
+
+> 🚨 **Use only if Business Central access is unavailable**
+
+The workshop includes mock data files as a **fallback option only**:
+
+- ⚠️ **Limited functionality**: Only tests MCP protocol mechanics
+- ❌ **No authentication**: Doesn't demonstrate Azure AD integration
+- ❌ **No real API calls**: Misses the actual BC API integration experience
+- ❌ **Static data**: Cannot test dynamic queries or updates
+- ✅ **Only benefit**: Allows basic MCP server setup validation
+
+**Recommendation**: Obtain Business Central access before the workshop for the complete learning experience.
+
+### 📚 Knowledge Prerequisites:
+
+- 🐍 Basic Python programming (variables, functions, async/await)
+- 📦 Understanding of APIs and HTTP requests
+- 📝 JSON format familiarity
+- ⚙️ Basic terminal/command line usage
+- 🔐 Familiarity with OAuth 2.0 / Azure AD authentication (helpful)
+
+### ✅ Good to Know:
+
+- 🧪 Virtual environment setup is **automated** via scripts
+- 🔧 All Python dependencies are in `requirements.txt`
+- ⏱️ Estimated time: **20-30 minutes** (with pre-setup)
+
+---
+
+## �📝 Step-by-Step Instructions
 
 ### Step 1: Download the Repository 📥
 
