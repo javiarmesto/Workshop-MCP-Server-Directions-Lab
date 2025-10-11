@@ -19,15 +19,52 @@
 
 **Duration:** 20-30 minutes hands-on
 
-**Repository:** github.com/javiarmesto/Workshop-MCP-Server-Directions
+**Repository:** github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab  
+**Download:** Code → Download ZIP (recommended)
+
+**Prerequisites:**
+- ✅ Python 3.12+, Claude Desktop
+- 🏭 **Business Central Environment** (Standard API v2.0)
+- 🔑 Azure AD App Registration + Credentials
+- 🧪 Fallback: Mock data (not recommended)
 
 ---
 
-## 📊 SLIDE 2: Workshop Structure & Objectives
+## 📊 SLIDE 2: Prerequisites & Setup
+
+### ✅ Required Software
+- **Python 3.12+** - [python.org/downloads](https://python.org/downloads)
+- **Claude Desktop** - [claude.ai/download](https://claude.ai/download)
+- **Terminal/PowerShell** - Basic command line knowledge
+
+### 🏭 Required: Business Central Integration (Workshop Objective)
+
+⚠️ **This workshop targets real BC environments**
+
+**You need:**
+- Azure AD Tenant with BC access
+- **Business Central Environment:**
+  - Company name, Environment name
+  - Standard API v2.0 enabled
+  - Endpoints: `/companies`, `/items`, `/customers`, `/salesOrders`
+- **Azure AD App Registration:**
+  - Client ID, Client Secret, Tenant ID
+  - API permissions for Dynamics 365 Business Central
+
+### 🧪 Alternative: Mock Data (Not Recommended)
+- ⚠️ Only if BC unavailable
+- ❌ No authentication, no real API calls
+- ❌ Limited to protocol mechanics testing
+- **Recommendation:** Get BC access before workshop
+
+---
+
+## 📊 SLIDE 3: Workshop Structure & Objectives
 
 ### 📋 9-Step Workshop Flow
 
 **Steps 1-4:** Environment Setup
+- Download ZIP and extract
 - Python 3.12+ virtual environment
 - Install dependencies (`mcp`, `httpx`, `msal`)
 - Validate setup with `validate_workshop.py`
@@ -53,34 +90,24 @@
 
 ---
 
-## 📊 SLIDE 3: MCP Architecture Overview
+## 📊 SLIDE 4: MCP Architecture Overview
 
 ### 🏗️ System Architecture
 
-```
-┌─────────────────────────────────┐
-│      CLAUDE DESKTOP             │
-│   (MCP Client - JSON-RPC)       │
-└──────────────┬──────────────────┘
-               │ STDIO (stdin/stdout)
-               ▼
-┌─────────────────────────────────┐
-│   server_workshop.py            │
-│   (MCP Server - STDIO)          │
-├─────────────────────────────────┤
-│  Tools │ Prompts │ Resources    │
-└──────┬───────────┬──────────────┘
-       │           │
-       ▼           ▼
-┌──────────────┐  ┌───────────────┐
-│   client.py  │  │  data/ (CSV)  │
-│  (BC Client) │  │  Mock Data    │
-└──────┬───────┘  └───────────────┘
-       │ OAuth 2.0
-       ▼
-┌─────────────────────────────────┐
-│   BUSINESS CENTRAL (OData API)  │
-└─────────────────────────────────┘
+```mermaid
+graph TB
+    A[Claude Desktop Client] -->|JSON-RPC over STDIO| B[server_workshop.py]
+    B --> C[Tools Handler]
+    B --> D[Prompts Handler]
+    B --> E[Resources Handler]
+    C --> F[client.py - Business Central Client]
+    F --> G[azure_auth.py - Azure AD Auth]
+    G -->|OAuth 2.0| H[Microsoft Dynamics 365 Business Central]
+    E --> I[data/ - CSV Files]
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style H fill:#e8f5e9
 ```
 
 ### 🔑 Key Components
@@ -88,18 +115,20 @@
 - **Tools:** Functions Claude can call (get_customers, get_items, etc.)
 - **Prompts:** Pre-configured templates (customer_analysis, vendor_analysis)
 - **Resources:** CSV/JSON data files exposed to Claude
-- **Mock Mode:** Works without BC credentials (default)
+- **Target:** Business Central API integration (OAuth 2.0 + Standard API v2.0)
+- **Fallback:** Mock mode available if BC access unavailable (not recommended)
 
 ---
 
-## 📊 SLIDE 4: Configuration & Setup
+## 📊 SLIDE 5: Configuration & Setup
 
 ### ⚙️ Quick Setup Commands
 
 ```bash
-# 1. Clone and navigate
-git clone https://github.com/javiarmesto/Workshop-MCP-Server-Directions.git
-cd Workshop-MCP-Server-Directions
+# 1. Download ZIP and extract
+# Go to: github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab
+# Click "Code" → "Download ZIP" → Extract
+cd Workshop-MCP-Server-Directions-Lab-main
 
 # 2. Create virtual environment
 python -m venv workshop-env
@@ -141,7 +170,7 @@ python validate_workshop.py
 
 ---
 
-## 📊 SLIDE 5: Step 9 - Hands-On Exercises
+## 📊 SLIDE 6: Step 9 - Hands-On Exercises
 
 ### 🎯 Part A: Testing Existing Tools (10 min)
 
@@ -178,15 +207,15 @@ All copy-paste code available in **WORKSHOP_GUIDE_EN.md** (Step 9)
 
 ---
 
-## 📊 SLIDE 6: Resources & Next Steps
+## 📊 SLIDE 7: Resources & Next Steps
 
 ### 📚 Documentation & References
 
 **Workshop Materials:**
-- 📖 `WORKSHOP_GUIDE_EN.md` - Complete step-by-step guide
+- � `WORKSHOP_GUIDE_EN.md` - Complete step-by-step guide
 - ✅ `validate_workshop.py` - Setup validation script
 - 📦 `data/` - Mock CSV files for testing
-- 💻 Repository: github.com/javiarmesto/Workshop-MCP-Server-Directions
+- 💻 Repository: github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab
 
 **MCP Protocol:**
 - 🌐 Spec: [spec.modelcontextprotocol.io](https://spec.modelcontextprotocol.io)
