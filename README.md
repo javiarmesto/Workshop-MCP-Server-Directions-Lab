@@ -4,7 +4,7 @@ Welcome to the **MCP Server Workshop**! This workshop teaches you to build a com
 
 > ⏱️ **Workshop Duration**: 20-30 minutes  
 > 📖 **[Start Here: Complete Workshop Guide →](WORKSHOP_GUIDE_EN.md)**  
-> 📊 **Presentation Slides**: PowerPoint presentation available separately
+> 📊 **Presentation Slides**: [MCP_Server_Custom Directions.pptx](data/MCP_Server_Custom%20Directions.pptx)
 
 ---
 

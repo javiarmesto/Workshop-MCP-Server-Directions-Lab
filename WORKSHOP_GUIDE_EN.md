@@ -508,7 +508,7 @@ The automated scripts will handle everything automatically:
 - ✅ Verify installation works correctly
 - ✅ Show you the next steps
 
-**If automated setup succeeds, skip to [Step 6: Testing with Claude Desktop](#-testing-with-claude-desktop).**
+**If automated setup succeeds, skip to [Step 6: Run the Workshop Server](#step-6-run-the-workshop-server).**
 
 ### Option B: Manual Setup (Step by Step) 📋
 
@@ -827,7 +827,7 @@ Run the validation script to ensure everything is configured correctly:
 
 **Note**: The server will appear to "hang" - this is normal! It's waiting for JSON-RPC messages from Claude Desktop via stdin/stdout. Press `Ctrl+C` to stop.
 
-**For actual usage**, configure this server in Claude Desktop (see [Step 7](#-testing-with-claude-desktop)).
+**For actual usage**, configure this server in Claude Desktop (see [Step 8: Configure Claude Desktop Integration](#step-8-configure-claude-desktop-integration)).
 
 **Server is now running!** Keep this terminal open.
 
