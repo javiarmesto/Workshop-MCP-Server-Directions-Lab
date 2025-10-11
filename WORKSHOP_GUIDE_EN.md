@@ -393,13 +393,13 @@ if __name__ == "__main__":
 
 ### Step 1: Download the Repository 📥
 
-1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions**
+1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab**
 2. Click the green **"Code"** button
 3. Select **"Download ZIP"**
 4. Extract the ZIP file to your desired location
 5. Open a terminal and navigate to the extracted folder:
    ```bash
-   cd Workshop-MCP-Server-Directions-main
+   cd Workshop-MCP-Server-Directions-Lab-main
    ```
 
 ### Step 2: Choose Your Setup Method
@@ -441,17 +441,17 @@ If you prefer manual control or the automated script encounters issues:
 ### Step 1: Download the Repository
 
 ```bash
-# 1. Go to: https://github.com/javiarmesto/Workshop-MCP-Server-Directions
+# 1. Go to: https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab
 # 2. Click the green "Code" button
 # 3. Select "Download ZIP"
 # 4. Extract the ZIP file to your desired location
 # 5. Navigate to the extracted folder:
-cd Workshop-MCP-Server-Directions-main
+cd Workshop-MCP-Server-Directions-Lab-main
 ```
 
 **What you'll see**:
 ```
-Workshop-MCP-Server-Directions/
+Workshop-MCP-Server-Directions-Lab/
 ├── server_workshop.py    ← Main server file
 ├── .env.example          ← Configuration template
 ├── requirements.txt      ← Python dependencies
@@ -1788,7 +1788,7 @@ You've completed the MCP Server Workshop! You now understand:
 
 - **MCP Documentation**: [spec.modelcontextprotocol.io](https://spec.modelcontextprotocol.io)
 - **Business Central API**: [Microsoft Docs](https://learn.microsoft.com/dynamics365/business-central/dev-itpro/api-reference/)
-- **Repository**: [GitHub](https://github.com/javiarmesto/Workshop-MCP-Server-Directions)
+- **Repository**: [GitHub](https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab)
 
 ---
 

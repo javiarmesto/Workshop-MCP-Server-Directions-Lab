@@ -21,15 +21,15 @@ Learn to build, extend, and customize MCP servers with:
 
 ## 📚 Quick Start
 
-### � Step 1: Download the Repository
+### 📥 Step 1: Download the Repository
 
-1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions**
+1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab**
 2. Click the green **"Code"** button
 3. Select **"Download ZIP"**
 4. Extract the ZIP file to your desired location
 5. Open a terminal and navigate to the extracted folder:
    ```bash
-   cd Workshop-MCP-Server-Directions-main
+   cd Workshop-MCP-Server-Directions-Lab-main
    ```
 
 ### �🚀 Step 2: Automated Setup (Recommended - 2 minutes)
@@ -64,11 +64,11 @@ The automated scripts will:
 
 ```bash
 # 1. Download and extract
-# Go to: https://github.com/javiarmesto/Workshop-MCP-Server-Directions
+# Go to: https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab
 # Click "Code" → "Download ZIP"
 # Extract the ZIP file
 # Navigate to the extracted folder:
-cd Workshop-MCP-Server-Directions-main
+cd Workshop-MCP-Server-Directions-Lab-main
 
 # 2. Install dependencies
 python -m venv workshop-env
@@ -147,7 +147,10 @@ Then restart Claude Desktop and start using your MCP tools!
 ## 📁 Repository Structure
 
 ```
-Workshop-MCP-Server-Directions/
+You should see this structure:
+
+```
+Workshop-MCP-Server-Directions-Lab/
 ├── 📄 server_workshop.py           # Main MCP server (STDIO transport)
 ├── 📄 validate_workshop.py         # Validation script
 ├── 📄 test_workshop_exercise.py    # Exercise tests
