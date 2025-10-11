@@ -1,0 +1,187 @@
+{
+  "analysis_metadata": {
+    "generated_at": "2024-12-31T12:00:00Z",
+    "data_source": "prices.csv",
+    "total_products": 20,
+    "categories_analyzed": 3,
+    "price_range": {
+      "min": 8.50,
+      "max": 1299.00,
+      "average": 251.58
+    }
+  },
+  "category_analysis": {
+    "OFF": {
+      "name": "Mobiliario de Oficina",
+      "product_count": 8,
+      "avg_price": 474.99,
+      "price_range": {
+        "min": 150.00,
+        "max": 899.00
+      },
+      "seasonal_factor": 0.95,
+      "top_products": [
+        {
+          "product_id": "OFF-001",
+          "name": "Silla ergonómica premium",
+          "price": 899.00,
+          "margin_percentage": 45
+        },
+        {
+          "product_id": "OFF-008",
+          "name": "Estantería modular",
+          "price": 750.00,
+          "margin_percentage": 40
+        }
+      ]
+    },
+    "CAF": {
+      "name": "Máquinas de Café",
+      "product_count": 7,
+      "avg_price": 438.57,
+      "price_range": {
+        "min": 89.00,
+        "max": 1299.00
+      },
+      "seasonal_factor": 1.05,
+      "top_products": [
+        {
+          "product_id": "CAF-007",
+          "name": "Cafetera superautomática premium",
+          "price": 1299.00,
+          "margin_percentage": 35
+        },
+        {
+          "product_id": "CAF-006",
+          "name": "Máquina espresso profesional",
+          "price": 899.00,
+          "margin_percentage": 38
+        }
+      ]
+    },
+    "COF": {
+      "name": "Variedades de Café",
+      "product_count": 5,
+      "avg_price": 20.90,
+      "price_range": {
+        "min": 8.50,
+        "max": 35.00
+      },
+      "seasonal_factor": 1.0,
+      "top_products": [
+        {
+          "product_id": "COF-005",
+          "name": "Café de especialidad Jamaica Blue Mountain",
+          "price": 35.00,
+          "margin_percentage": 55
+        },
+        {
+          "product_id": "COF-004",
+          "name": "Café orgánico de altura",
+          "price": 28.00,
+          "margin_percentage": 50
+        }
+      ]
+    }
+  },
+  "price_insights": {
+    "high_margin_products": [
+      {
+        "product_id": "COF-005",
+        "margin": 55,
+        "category": "Premium Coffee"
+      },
+      {
+        "product_id": "COF-004",
+        "margin": 50,
+        "category": "Organic Coffee"
+      },
+      {
+        "product_id": "OFF-001",
+        "margin": 45,
+        "category": "Ergonomic Furniture"
+      }
+    ],
+    "price_recommendations": {
+      "discount_opportunities": [
+        {
+          "product_id": "OFF-003",
+          "current_price": 450.00,
+          "suggested_discount": 10,
+          "reason": "High inventory, seasonal adjustment"
+        },
+        {
+          "product_id": "CAF-002",
+          "current_price": 299.00,
+          "suggested_discount": 15,
+          "reason": "Promote complementary sales"
+        }
+      ],
+      "bundle_opportunities": [
+        {
+          "primary_product": "CAF-001",
+          "bundle_with": ["COF-001", "COF-002"],
+          "estimated_uplift": 25
+        },
+        {
+          "primary_product": "OFF-001",
+          "bundle_with": ["OFF-002", "OFF-003"],
+          "estimated_uplift": 15
+        }
+      ]
+    }
+  },
+  "market_trends": {
+    "seasonal_adjustments": {
+      "Q1": {
+        "office_furniture": -5,
+        "coffee_machines": 10,
+        "coffee_varieties": 0
+      },
+      "Q2": {
+        "office_furniture": 5,
+        "coffee_machines": 5,
+        "coffee_varieties": 0
+      },
+      "Q3": {
+        "office_furniture": 0,
+        "coffee_machines": -5,
+        "coffee_varieties": 5
+      },
+      "Q4": {
+        "office_furniture": 10,
+        "coffee_machines": 15,
+        "coffee_varieties": 10
+      }
+    },
+    "demand_forecast": {
+      "trending_up": ["CAF-001", "COF-005", "OFF-001"],
+      "stable": ["COF-001", "COF-002", "OFF-002"],
+      "trending_down": ["CAF-003", "OFF-004"]
+    }
+  },
+  "competitive_analysis": {
+    "price_positioning": {
+      "premium_segment": ["COF-005", "CAF-007", "OFF-001"],
+      "mid_market": ["CAF-002", "CAF-004", "OFF-002"],
+      "value_segment": ["COF-001", "CAF-001", "OFF-003"]
+    },
+    "margin_optimization": {
+      "increase_potential": [
+        {
+          "product_id": "CAF-001",
+          "current_margin": 25,
+          "potential_margin": 30,
+          "risk_level": "Low"
+        }
+      ],
+      "protect_current": [
+        {
+          "product_id": "COF-005",
+          "current_margin": 55,
+          "competitive_pressure": "Medium"
+        }
+      ]
+    }
+  }
+}

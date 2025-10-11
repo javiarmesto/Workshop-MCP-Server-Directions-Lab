@@ -1,0 +1,40 @@
+# 🚀 WORKSHOP MCP SERVER - Dependencias Mínimas Requeridas
+# ==========================================================
+
+# Core MCP Dependencies
+mcp[cli]>=1.10.0              # SDK oficial de Model Context Protocol
+fastmcp>=2.10.1               # Framework FastMCP para desarrollo rápido
+
+# HTTP and Async Libraries
+httpx                         # Cliente HTTP asíncrono moderno
+anyio                         # Librería para concurrencia asíncrona
+uvicorn                       # Servidor ASGI de alto rendimiento
+
+# Data Validation and Configuration
+pydantic                      # Validación de datos y configuración
+python-dotenv                 # Gestión de variables de entorno
+
+# Authentication (Azure AD)
+authlib                       # Librería de autenticación OAuth2/OpenID
+
+# Web Framework
+starlette                     # Framework ASGI ligero y moderno
+
+# CLI and Utilities
+click                         # Framework para interfaces de línea de comandos
+typer                         # CLI moderna basada en type hints
+rich                          # Salida rica para terminal
+
+# Optional: Enhanced Session Management (comentado por defecto)
+# redis>=5.0.0                # Para session management avanzado
+# sqlalchemy>=2.0.0           # Para persistencia de datos
+# psycopg2-binary>=2.9.0      # Driver PostgreSQL
+
+# Optional: Monitoring and Analytics (comentado por defecto)  
+# structlog>=23.0.0           # Logging estructurado
+# prometheus-client>=0.19.0   # Métricas y monitoreo
+
+# Optional: Advanced Analytics (comentado por defecto)
+# numpy>=1.24.0               # Computación numérica
+# scipy>=1.11.0               # Algoritmos científicos
+# sentence-transformers       # Embeddings y análisis de texto

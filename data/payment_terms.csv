@@ -1,0 +1,8 @@
+id,code,displayName,dueDateCalculation,discountDateCalculation,discountPercent
+PT001,NET30,Net 30 Days,30D,0D,0
+PT002,NET15,Net 15 Days,15D,0D,0
+PT003,COD,Cash on Delivery,0D,0D,0
+PT004,210NET30,2/10 Net 30,30D,10D,2
+PT005,NET60,Net 60 Days,60D,0D,0
+PT006,NET90,Net 90 Days,90D,0D,0
+PT007,115NET30,1/15 Net 30,30D,15D,1

@@ -1,0 +1,21 @@
+product_id,product_name,unit_price,cost_price,margin_percent,currency,last_updated
+OFF001,"Escritorio ejecutivo roble 160x80cm",459.99,280.00,39.1,EUR,2024-12-15
+OFF002,"Silla ergonómica con respaldo alto",299.99,180.00,40.0,EUR,2024-12-14
+OFF003,"Estantería modular 5 baldas",189.99,110.00,42.1,EUR,2024-12-13
+OFF004,"Lámpara LED escritorio regulable",79.99,35.00,56.3,EUR,2024-12-12
+OFF005,"Archivador metálico 4 cajones",159.99,95.00,40.6,EUR,2024-12-11
+OFF006,"Papelera metálica 15L",29.99,12.00,60.0,EUR,2024-12-10
+OFF007,"Organizador de escritorio bambú",45.99,20.00,56.5,EUR,2024-12-09
+CAF001,"Máquina café espresso Delonghi",799.99,520.00,35.0,EUR,2024-12-08
+CAF002,"Molinillo café automático Baratza",249.99,150.00,40.0,EUR,2024-12-07
+CAF003,"Cafetera filtro programable 12 tazas",129.99,75.00,42.3,EUR,2024-12-06
+CAF004,"Espumador leche manual",39.99,18.00,55.0,EUR,2024-12-05
+CAF005,"Báscula digital café 0.1g precisión",89.99,45.00,50.0,EUR,2024-12-04
+CAF006,"Tamper café acero inoxidable 58mm",69.99,30.00,57.1,EUR,2024-12-03
+CAF007,"Jarra leche acero inoxidable 600ml",34.99,15.00,57.1,EUR,2024-12-02
+COF001,"Café en grano Arábica Colombia 1kg",24.99,12.50,50.0,EUR,2024-12-01
+COF002,"Café en grano Robusta Vietnam 1kg",19.99,10.00,50.0,EUR,2024-11-30
+COF003,"Blend café premium mezcla 80/20 1kg",29.99,15.00,50.0,EUR,2024-11-29
+COF004,"Café descafeinado natural 1kg",26.99,13.50,50.0,EUR,2024-11-28
+COF005,"Café orgánico certificado 1kg",34.99,18.00,48.6,EUR,2024-11-27
+COF006,"Cápsulas café compatibles Nespresso x50",12.99,6.00,53.8,EUR,2024-11-26

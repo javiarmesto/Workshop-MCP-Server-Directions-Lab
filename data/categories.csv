@@ -1,0 +1,21 @@
+category_id,category_name,product_id,product_name,classification,priority_level,seasonal_factor
+CAT001,"Mobiliario Oficina",OFF001,"Escritorio ejecutivo roble 160x80cm",core,high,0.9
+CAT001,"Mobiliario Oficina",OFF002,"Silla ergonómica con respaldo alto",core,high,0.9
+CAT001,"Mobiliario Oficina",OFF003,"Estantería modular 5 baldas",core,medium,0.9
+CAT001,"Mobiliario Oficina",OFF005,"Archivador metálico 4 cajones",support,medium,1.0
+CAT002,"Accesorios Oficina",OFF004,"Lámpara LED escritorio regulable",essential,medium,1.0
+CAT002,"Accesorios Oficina",OFF006,"Papelera metálica 15L",support,low,1.0
+CAT002,"Accesorios Oficina",OFF007,"Organizador de escritorio bambú",optional,low,1.1
+CAT003,"Máquinas Café",CAF001,"Máquina café espresso Delonghi",core,high,1.2
+CAT003,"Máquinas Café",CAF002,"Molinillo café automático Baratza",essential,medium,1.0
+CAT003,"Máquinas Café",CAF003,"Cafetera filtro programable 12 tazas",core,medium,1.0
+CAT004,"Accesorios Café",CAF004,"Espumador leche manual",optional,low,1.0
+CAT004,"Accesorios Café",CAF005,"Báscula digital café 0.1g precisión",essential,medium,1.0
+CAT004,"Accesorios Café",CAF006,"Tamper café acero inoxidable 58mm",essential,medium,1.0
+CAT004,"Accesorios Café",CAF007,"Jarra leche acero inoxidable 600ml",optional,low,1.0
+CAT005,"Café y Consumibles",COF001,"Café en grano Arábica Colombia 1kg",core,high,1.1
+CAT005,"Café y Consumibles",COF002,"Café en grano Robusta Vietnam 1kg",core,medium,1.0
+CAT005,"Café y Consumibles",COF003,"Blend café premium mezcla 80/20 1kg",core,high,1.0
+CAT005,"Café y Consumibles",COF004,"Café descafeinado natural 1kg",optional,low,1.0
+CAT005,"Café y Consumibles",COF005,"Café orgánico certificado 1kg",optional,medium,1.2
+CAT005,"Café y Consumibles",COF006,"Cápsulas café compatibles Nespresso x50",optional,medium,1.0
