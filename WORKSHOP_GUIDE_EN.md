@@ -1,6 +1,6 @@
-# 🎓 MCP Server Workshop: Complete Step-by-Step Guide
+﻿# ðŸŽ“ MCP Server Workshop: Complete Step-by-Step Guide
 
-## 📖 Table of Contents
+## ðŸ“– Table of Contents
 
 1. [Workshop Overview](#-workshop-overview)
 2. [Understanding the Architecture](#-understanding-the-architecture)
@@ -12,17 +12,17 @@
 
 ---
 
-## 🎯 Workshop Overview
+## ðŸŽ¯ Workshop Overview
 
 ### What You Will Learn
 
 This workshop teaches you to build an MCP (Model Context Protocol) server with STDIO transport, integrated with Microsoft Dynamics 365 Business Central for Claude Desktop. By the end, you will:
 
-- ✅ Understand MCP architecture and components
-- ✅ Configure and run an MCP server with STDIO transport
-- ✅ Integrate with Business Central APIs
-- ✅ Create custom tools and prompts
-- ✅ Test your server with Claude Desktop
+- âœ… Understand MCP architecture and components
+- âœ… Configure and run an MCP server with STDIO transport
+- âœ… Integrate with Business Central APIs
+- âœ… Create custom tools and prompts
+- âœ… Test your server with Claude Desktop
 
 ### Workshop Duration
 
@@ -38,7 +38,7 @@ This workshop teaches you to build an MCP (Model Context Protocol) server with S
 
 ---
 
-## 🏗️ Understanding the Architecture
+## ðŸ—ï¸ Understanding the Architecture
 
 ### MCP Server Architecture Overview
 
@@ -84,7 +84,7 @@ graph TB
 
 ---
 
-## 📡 Understanding STDIO Transport
+## ðŸ“¡ Understanding STDIO Transport
 
 ### What is STDIO Transport?
 
@@ -146,7 +146,7 @@ Configure in `claude_desktop_config.json` and Claude Desktop launches it automat
 
 ---
 
-## 📁 Key Files Explained
+## ðŸ“ Key Files Explained
 
 ### 1. `.env` - Environment Configuration
 
@@ -211,23 +211,23 @@ class BusinessCentralClient:
 
 **Example flow**:
 ```
-User in Claude Desktop → "Show me top 5 customers"
-    ↓
-Claude Desktop → MCP Server (tool: get_customers, args: {top: 5})
-    ↓
-Server → client.get_customers(top=5)
-    ↓
-Client → Azure AD (get token)
-    ↓
-Client → Business Central API (/companies/{id}/customers?$top=5)
-    ↓
-Business Central → Returns customer data
-    ↓
-Client → Returns data to Server
-    ↓
-Server → Formats and returns to Claude Desktop
-    ↓
-Claude Desktop → Displays formatted customer list
+User in Claude Desktop â†’ "Show me top 5 customers"
+    â†“
+Claude Desktop â†’ MCP Server (tool: get_customers, args: {top: 5})
+    â†“
+Server â†’ client.get_customers(top=5)
+    â†“
+Client â†’ Azure AD (get token)
+    â†“
+Client â†’ Business Central API (/companies/{id}/customers?$top=5)
+    â†“
+Business Central â†’ Returns customer data
+    â†“
+Client â†’ Returns data to Server
+    â†“
+Server â†’ Formats and returns to Claude Desktop
+    â†“
+Claude Desktop â†’ Displays formatted customer list
 ```
 
 ---
@@ -270,11 +270,11 @@ class Config:
 5. Other modules access config values via `config.VARIABLE_NAME`
 
 **Benefits**:
-- ✅ Single place to manage all settings
-- ✅ Works without credentials (mock data mode for learning)
-- ✅ Clear warnings for missing configuration
-- ✅ Type safety for configuration values
-- ✅ Easy to extend with new configuration options
+- âœ… Single place to manage all settings
+- âœ… Works without credentials (mock data mode for learning)
+- âœ… Clear warnings for missing configuration
+- âœ… Type safety for configuration values
+- âœ… Easy to extend with new configuration options
 
 ---
 
@@ -389,11 +389,11 @@ if __name__ == "__main__":
 
 ---
 
-## � Prerequisites
+## ï¿½ Prerequisites
 
 Before starting the workshop, ensure you have the following:
 
-### ✅ Required Software:
+### âœ… Required Software:
 
 1. **Python 3.12 or higher**
    - Download: [python.org/downloads](https://www.python.org/downloads/)
@@ -410,9 +410,9 @@ Before starting the workshop, ensure you have the following:
    - macOS/Linux: Terminal
    - Basic knowledge of navigating folders and running commands
 
-### 🏭 Required for Business Central Integration (Workshop Objective):
+### ðŸ­ Required for Business Central Integration (Workshop Objective):
 
-> ⚠️ **Important**: This workshop is designed to work with **real Business Central environments**. The following setup is essential for the full workshop experience.
+> âš ï¸ **Important**: This workshop is designed to work with **real Business Central environments**. The following setup is essential for the full workshop experience.
 
 - **Azure AD Tenant** with Business Central access
 - **Business Central Environment** (Sandbox or Production):
@@ -435,39 +435,39 @@ Before starting the workshop, ensure you have the following:
     - Delegated permissions or Application permissions
   - **Redirect URI** (if using interactive authentication)
 
-### 🧪 Alternative: Mock Data Mode (Not Recommended)
+### ðŸ§ª Alternative: Mock Data Mode (Not Recommended)
 
-> 🚨 **Use only if Business Central access is unavailable**
+> ðŸš¨ **Use only if Business Central access is unavailable**
 
 The workshop includes mock data files as a **fallback option only**:
 
-- ⚠️ **Limited functionality**: Only tests MCP protocol mechanics
-- ❌ **No authentication**: Doesn't demonstrate Azure AD integration
-- ❌ **No real API calls**: Misses the actual BC API integration experience
-- ❌ **Static data**: Cannot test dynamic queries or updates
-- ✅ **Only benefit**: Allows basic MCP server setup validation
+- âš ï¸ **Limited functionality**: Only tests MCP protocol mechanics
+- âŒ **No authentication**: Doesn't demonstrate Azure AD integration
+- âŒ **No real API calls**: Misses the actual BC API integration experience
+- âŒ **Static data**: Cannot test dynamic queries or updates
+- âœ… **Only benefit**: Allows basic MCP server setup validation
 
 **Recommendation**: Obtain Business Central access before the workshop for the complete learning experience.
 
-### 📚 Knowledge Prerequisites:
+### ðŸ“š Knowledge Prerequisites:
 
-- 🐍 Basic Python programming (variables, functions, async/await)
-- 📦 Understanding of APIs and HTTP requests
-- 📝 JSON format familiarity
-- ⚙️ Basic terminal/command line usage
-- 🔐 Familiarity with OAuth 2.0 / Azure AD authentication (helpful)
+- ðŸ Basic Python programming (variables, functions, async/await)
+- ðŸ“¦ Understanding of APIs and HTTP requests
+- ðŸ“ JSON format familiarity
+- âš™ï¸ Basic terminal/command line usage
+- ðŸ” Familiarity with OAuth 2.0 / Azure AD authentication (helpful)
 
-### ✅ Good to Know:
+### âœ… Good to Know:
 
-- 🧪 Virtual environment setup is **automated** via scripts
-- 🔧 All Python dependencies are in `requirements.txt`
-- ⏱️ Estimated time: **20-30 minutes** (with pre-setup)
+- ðŸ§ª Virtual environment setup is **automated** via scripts
+- ðŸ”§ All Python dependencies are in `requirements.txt`
+- â±ï¸ Estimated time: **20-30 minutes** (with pre-setup)
 
 ---
 
-## �📝 Step-by-Step Instructions
+## ï¿½ðŸ“ Step-by-Step Instructions
 
-### Step 1: Download the Repository 📥
+### Step 1: Download the Repository ðŸ“¥
 
 1. Go to: **https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab**
 2. Click the green **"Code"** button
@@ -480,7 +480,7 @@ The workshop includes mock data files as a **fallback option only**:
 
 ### Step 2: Choose Your Setup Method
 
-#### Option A: Automated Setup (Recommended) ⚡
+#### Option A: Automated Setup (Recommended) âš¡
 
 **For Windows Users:**
 ```powershell
@@ -502,15 +502,15 @@ chmod +x setup.sh
 ```
 
 The automated scripts will handle everything automatically:
-- ✅ Check Python version compatibility (3.12+)
-- ✅ Create and activate virtual environment properly
-- ✅ Install all required dependencies
-- ✅ Verify installation works correctly
-- ✅ Show you the next steps
+- âœ… Check Python version compatibility (3.12+)
+- âœ… Create and activate virtual environment properly
+- âœ… Install all required dependencies
+- âœ… Verify installation works correctly
+- âœ… Show you the next steps
 
 **If automated setup succeeds, skip to [Step 6: Run the Workshop Server](#step-6-run-the-workshop-server).**
 
-### Option B: Manual Setup (Step by Step) 📋
+### Option B: Manual Setup (Step by Step) ðŸ“‹
 
 If you prefer manual control or the automated script encounters issues:
 
@@ -528,21 +528,21 @@ cd Workshop-MCP-Server-Directions-Lab-main
 **What you'll see**:
 ```
 Workshop-MCP-Server-Directions-Lab/
-├── server_workshop.py    ← Main server file
-├── .env.example          ← Configuration template
-├── requirements.txt      ← Python dependencies
-├── src/                  ← Source code modules
-│   ├── client.py         ← Business Central API client
-│   ├── config.py         ← Configuration management
-│   └── azure_auth.py     ← Azure AD authentication
-├── data/                 ← Sample data files
-│   ├── categories.csv
-│   ├── prices.csv
-│   ├── substitutes.csv
-│   ├── sales_orders.csv
-│   ├── payment_terms.csv
-│   └── price-analysis.json
-└── archive/              ← Archived files (HTTP version, old tests)
+â”œâ”€â”€ server_workshop.py    â† Main server file
+â”œâ”€â”€ .env.example          â† Configuration template
+â”œâ”€â”€ requirements.txt      â† Python dependencies
+â”œâ”€â”€ src/                  â† Source code modules
+â”‚   â”œâ”€â”€ client.py         â† Business Central API client
+â”‚   â”œâ”€â”€ config.py         â† Configuration management
+â”‚   â””â”€â”€ azure_auth.py     â† Azure AD authentication
+â”œâ”€â”€ data/                 â† Sample data files
+â”‚   â”œâ”€â”€ categories.csv
+â”‚   â”œâ”€â”€ prices.csv
+â”‚   â”œâ”€â”€ substitutes.csv
+â”‚   â”œâ”€â”€ sales_orders.csv
+â”‚   â”œâ”€â”€ payment_terms.csv
+â”‚   â””â”€â”€ price-analysis.json
+â””â”€â”€ archive/              â† Archived files (HTTP version, old tests)
 ```
 
 ---
@@ -568,7 +568,7 @@ If Python 3.12+ is not installed:
 python -m venv workshop-env
 ```
 
-**🔥 IMPORTANT: Activate Virtual Environment**
+**ðŸ”¥ IMPORTANT: Activate Virtual Environment**
 
 **For Windows PowerShell:**
 ```powershell
@@ -585,9 +585,9 @@ workshop-env\Scripts\activate.bat
 source workshop-env/bin/activate
 ```
 
-**✅ Verification:** After activation, your prompt should show `(workshop-env)` at the beginning.
+**âœ… Verification:** After activation, your prompt should show `(workshop-env)` at the beginning.
 
-**❌ Troubleshooting Windows:**
+**âŒ Troubleshooting Windows:**
 - If you get "execution policy" error, run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 - Always use `.\` before the path: `.\workshop-env\Scripts\Activate.ps1`
 
@@ -598,7 +598,7 @@ source workshop-env/bin/activate
 
 #### 2.3 Install Dependencies
 
-**⚠️ IMPORTANT: Make sure virtual environment is activated first!**
+**âš ï¸ IMPORTANT: Make sure virtual environment is activated first!**
 
 Your prompt should show `(workshop-env)` before running:
 
@@ -612,7 +612,7 @@ pip install -r requirements.txt
 2. Use: `python -m pip install -r requirements.txt`
 3. On Windows, ensure PowerShell execution policy allows scripts
 
-> 🚨 **Setup Issues?** For detailed troubleshooting of common setup problems, see [SETUP_TROUBLESHOOTING.md](SETUP_TROUBLESHOOTING.md)
+> ðŸš¨ **Setup Issues?** For detailed troubleshooting of common setup problems, see [SETUP_TROUBLESHOOTING.md](SETUP_TROUBLESHOOTING.md)
 
 **What gets installed**:
 - `mcp`: Model Context Protocol SDK
@@ -642,10 +642,10 @@ Open `.env` in your text editor and fill in your credentials:
 
 ```env
 # ========================================
-# 🔑 AZURE AD & BUSINESS CENTRAL CONFIG
+# ðŸ”‘ AZURE AD & BUSINESS CENTRAL CONFIG
 # ========================================
 
-# Get these from Azure Portal → App Registrations
+# Get these from Azure Portal â†’ App Registrations
 AZURE_CLIENT_ID=12345678-1234-1234-1234-123456789abc
 AZURE_CLIENT_SECRET=your-secret-value-here
 AZURE_TENANT_ID=87654321-4321-4321-4321-cba987654321
@@ -663,17 +663,17 @@ LOG_LEVEL=INFO
 
 **Azure AD Credentials**:
 1. Go to [Azure Portal](https://portal.azure.com)
-2. Navigate to **Azure Active Directory** → **App registrations**
+2. Navigate to **Azure Active Directory** â†’ **App registrations**
 3. Create new registration or select existing
-4. Copy **Application (client) ID** → `AZURE_CLIENT_ID`
-5. Copy **Directory (tenant) ID** → `AZURE_TENANT_ID`
-6. Go to **Certificates & secrets** → Create new secret
-7. Copy the secret value → `AZURE_CLIENT_SECRET`
+4. Copy **Application (client) ID** â†’ `AZURE_CLIENT_ID`
+5. Copy **Directory (tenant) ID** â†’ `AZURE_TENANT_ID`
+6. Go to **Certificates & secrets** â†’ Create new secret
+7. Copy the secret value â†’ `AZURE_CLIENT_SECRET`
 
 **Business Central Details**:
 1. Go to Business Central admin center
 2. **Environment**: Usually "production" or "sandbox"
-3. **Company ID**: Navigate to **Companies** → Copy the GUID
+3. **Company ID**: Navigate to **Companies** â†’ Copy the GUID
 
 **Don't have Business Central access?**
 - Don't worry! The server includes mock data
@@ -699,11 +699,11 @@ nano server_workshop.py  # Linux/macOS
 ```
 
 **What to look for**:
-- 📦 **Imports**: MCP types, Starlette components
-- 🔧 **Server setup**: `Server("business-central-workshop")`
-- 🛠️ **Tool definitions**: `@server.list_tools()`
-- 💬 **Prompt definitions**: `@server.list_prompts()`
-- 📊 **Resource definitions**: `@server.list_resources()`
+- ðŸ“¦ **Imports**: MCP types, Starlette components
+- ðŸ”§ **Server setup**: `Server("business-central-workshop")`
+- ðŸ› ï¸ **Tool definitions**: `@server.list_tools()`
+- ðŸ’¬ **Prompt definitions**: `@server.list_prompts()`
+- ðŸ“Š **Resource definitions**: `@server.list_resources()`
 
 #### 4.2 Review `src/client.py`
 
@@ -743,55 +743,55 @@ Run the validation script to ensure everything is configured correctly:
 .\workshop-env\Scripts\python.exe validate_workshop.py
 ```
 
-> 💡 **Tip**: If your virtual environment is consistently activated, you can also use `python validate_workshop.py`
+> ðŸ’¡ **Tip**: If your virtual environment is consistently activated, you can also use `python validate_workshop.py`
 
 **Expected output**:
 ```
-🚀 MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)
+ðŸš€ MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)
 ============================================================
 
 ============================================================
-🔍 Python Verification
+ðŸ” Python Verification
 ============================================================
-✅ Python 3.13.7 - Compatible
+âœ… Python 3.13.7 - Compatible
 
 ============================================================
-🔍 Dependencies Verification
+ðŸ” Dependencies Verification
 ============================================================
-✅ mcp
-✅ fastmcp
+âœ… mcp
+âœ… fastmcp
 [... more dependencies ...]
 
-✅ All dependencies are installed
+âœ… All dependencies are installed
 
 ============================================================
-🔍 Files Verification
+ðŸ” Files Verification
 ============================================================
-✅ server_workshop.py
-✅ requirements.txt
+âœ… server_workshop.py
+âœ… requirements.txt
 [... more files ...]
 
-✅ All files are present
+âœ… All files are present
 
 ============================================================
-🔍 Configuration Verification
+ðŸ” Configuration Verification
 ============================================================
-✅ .env file found
-✅ Complete configuration
+âœ… .env file found
+âœ… Complete configuration
 
 ============================================================
-🔍 VALIDATION SUMMARY
+ðŸ” VALIDATION SUMMARY
 ============================================================
-✅ PASS Python Version
-✅ PASS Dependencies
-✅ PASS Files
-✅ PASS Configuration
-✅ PASS Data Files
-✅ PASS Server Import
+âœ… PASS Python Version
+âœ… PASS Dependencies
+âœ… PASS Files
+âœ… PASS Configuration
+âœ… PASS Data Files
+âœ… PASS Server Import
 
-📊 RESULT: 6/6 checks passed
+ðŸ“Š RESULT: 6/6 checks passed
 
-🎉 WORKSHOP READY! You can run:
+ðŸŽ‰ WORKSHOP READY! You can run:
    .\workshop-env\Scripts\python.exe server_workshop.py
 ```
 
@@ -816,12 +816,12 @@ Run the validation script to ensure everything is configured correctly:
 .\workshop-env\Scripts\python.exe server_workshop.py
 ```
 
-> 💡 **Tip**: Alternatively, you can use `python server_workshop.py` if your virtual environment is properly activated
+> ðŸ’¡ **Tip**: Alternatively, you can use `python server_workshop.py` if your virtual environment is properly activated
 
 **Expected output (STDIO Server)**:
 ```
-2025-10-11 10:11:03,178 INFO __main__: 🌟 Starting MCP Workshop Server with STDIO transport
-2025-10-11 10:11:03,178 INFO __main__: 📡 Ready for Claude Desktop connection
+2025-10-11 10:11:03,178 INFO __main__: ðŸŒŸ Starting MCP Workshop Server with STDIO transport
+2025-10-11 10:11:03,178 INFO __main__: ðŸ“¡ Ready for Claude Desktop connection
 [Server waits for STDIO input/output from Claude Desktop]
 ```
 
@@ -874,8 +874,8 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVe
 **Method 3: Check Server Logs**
 In the terminal where the server is running, you should see:
 ```
-INFO __main__: 🌟 Starting MCP Workshop Server with STDIO transport
-INFO __main__: 📡 Ready for Claude Desktop connection
+INFO __main__: ðŸŒŸ Starting MCP Workshop Server with STDIO transport
+INFO __main__: ðŸ“¡ Ready for Claude Desktop connection
 ```
 
 ---
@@ -930,7 +930,7 @@ try:
     input_data = json.dumps(init_msg) + '\n' + json.dumps(list_tools_msg) + '\n'
     stdout, stderr = process.communicate(input=input_data, timeout=10)
     
-    print('📋 Available Tools:')
+    print('ðŸ“‹ Available Tools:')
     lines = stdout.strip().split('\n')
     for line in lines:
         if line.strip():
@@ -938,7 +938,7 @@ try:
                 response = json.loads(line)
                 if 'result' in response and 'tools' in response.get('result', {}):
                     for tool in response['result']['tools']:
-                        print(f'  ✅ {tool[\"name\"]}: {tool[\"description\"]}')
+                        print(f'  âœ… {tool[\"name\"]}: {tool[\"description\"]}')
             except: pass
                         
 except Exception as e:
@@ -950,12 +950,12 @@ finally:
 ```
 
 **Expected tools available:**
-- ✅ `get_customers` - 🏢 Get customer list from Business Central
-- ✅ `get_items` - 📦 Get items/products from Business Central  
-- ✅ `get_sales_orders` - 📋 Get sales orders from Business Central
-- ✅ `get_customer_details` - 👤 Get detailed customer information
-- ✅ `get_item_details` - 🔍 Get detailed item information
-- ✅ `get_currency_exchange_rates` - 💱 Get currency exchange rates
+- âœ… `get_customers` - ðŸ¢ Get customer list from Business Central
+- âœ… `get_items` - ðŸ“¦ Get items/products from Business Central  
+- âœ… `get_sales_orders` - ðŸ“‹ Get sales orders from Business Central
+- âœ… `get_customer_details` - ðŸ‘¤ Get detailed customer information
+- âœ… `get_item_details` - ðŸ” Get detailed item information
+- âœ… `get_currency_exchange_rates` - ðŸ’± Get currency exchange rates
 
 #### 7.2 Configure Claude Desktop
 
@@ -1012,13 +1012,13 @@ import asyncio
 import json
 
 async def test_get_customers():
-    print('🧪 Testing get_customers tool')
+    print('ðŸ§ª Testing get_customers tool')
     print('=' * 35)
     
     arguments = {'top': 5}
     result = await server_workshop.handle_call_tool('get_customers', arguments)
     
-    print('📋 Customer Data (Top 5):')
+    print('ðŸ“‹ Customer Data (Top 5):')
     print('-' * 25)
     for item in result:
         if hasattr(item, 'text'):
@@ -1030,7 +1030,7 @@ async def test_get_customers():
                         city = customer.get('city', 'N/A')
                         phone = customer.get('phoneNumber', 'N/A')
                         print(f'  {i}. {name}')
-                        print(f'     📍 {city} | 📞 {phone}')
+                        print(f'     ðŸ“ {city} | ðŸ“ž {phone}')
                         print()
                     break
             except:
@@ -1043,18 +1043,18 @@ asyncio.run(test_get_customers())
 
 **Expected output:**
 ```
-🧪 Testing get_customers tool
+ðŸ§ª Testing get_customers tool
 ===================================
-📋 Customer Data (Top 5):
+ðŸ“‹ Customer Data (Top 5):
 -------------------------
   1. Adatum Corporation
-     📍 Atlanta | 📞 555-0123
+     ðŸ“ Atlanta | ðŸ“ž 555-0123
      
   2. Trey Research  
-     📍 New York | 📞 555-0456
+     ðŸ“ New York | ðŸ“ž 555-0456
      
   3. School of Fine Art
-     📍 Miami | 📞 555-0789
+     ðŸ“ Miami | ðŸ“ž 555-0789
      
   [... more customers ...]
 ```
@@ -1070,13 +1070,13 @@ import asyncio
 import json
 
 async def test_get_items():
-    print('🧪 Testing get_items tool')
+    print('ðŸ§ª Testing get_items tool')
     print('=' * 30)
     
     arguments = {'top': 3}
     result = await server_workshop.handle_call_tool('get_items', arguments)
     
-    print('📦 Item Data (Top 3):')
+    print('ðŸ“¦ Item Data (Top 3):')
     print('-' * 20)
     for item in result:
         if hasattr(item, 'text'):
@@ -1088,7 +1088,7 @@ async def test_get_items():
                         price = product.get('unitPrice', 0)
                         stock = product.get('quantityOnHand', 0)
                         print(f'  {i}. {name}')
-                        print(f'     💰 ${price} | 📊 Stock: {stock}')
+                        print(f'     ðŸ’° ${price} | ðŸ“Š Stock: {stock}')
                         print()
                     break
             except:
@@ -1101,18 +1101,18 @@ asyncio.run(test_get_items())
 
 **Expected output:**
 ```
-🧪 Testing get_items tool
+ðŸ§ª Testing get_items tool
 ==============================
-📦 Item Data (Top 3):
+ðŸ“¦ Item Data (Top 3):
 --------------------
   1. ATHENS Desk
-     💰 $2000.0 | 📊 Stock: 15
+     ðŸ’° $2000.0 | ðŸ“Š Stock: 15
      
   2. PARIS Guest Chair
-     💰 $800.0 | 📊 Stock: 25
+     ðŸ’° $800.0 | ðŸ“Š Stock: 25
      
   3. LONDON Swivel Chair
-     💰 $1200.0 | 📊 Stock: 12
+     ðŸ’° $1200.0 | ðŸ“Š Stock: 12
 ```
 
 **Test currency exchange rates:**
@@ -1126,12 +1126,12 @@ import asyncio
 import json
 
 async def test_currency_rates():
-    print('🧪 Testing get_currency_exchange_rates tool')
+    print('ðŸ§ª Testing get_currency_exchange_rates tool')
     print('=' * 45)
     
     result = await server_workshop.handle_call_tool('get_currency_exchange_rates', {})
     
-    print('💱 Currency Exchange Rates:')
+    print('ðŸ’± Currency Exchange Rates:')
     print('-' * 25)
     for item in result:
         if hasattr(item, 'text'):
@@ -1141,7 +1141,7 @@ async def test_currency_rates():
                     for rate in data[:5]:  # Show first 5
                         currency = rate.get('currencyCode', 'Unknown')
                         exchange_rate = rate.get('exchangeRate', 0)
-                        print(f'  💰 {currency}: {exchange_rate}')
+                        print(f'  ðŸ’° {currency}: {exchange_rate}')
                     break
             except:
                 print(f'Raw response: {item.text[:200]}...')
@@ -1235,23 +1235,23 @@ Write-Host "Server Path: $serverPath"
 }
 ```
 
-**⚠️ CRITICAL: Use Full Python Path**
+**âš ï¸ CRITICAL: Use Full Python Path**
 
 During our testing, we discovered that even with the virtual environment activated, using just `python` may not work correctly in PowerShell. **Always use the full path to the Python executable** as shown in the configuration above.
 
-**⚠️ IMPORTANT**: Replace `YOUR_USERNAME` with your actual Windows username!
+**âš ï¸ IMPORTANT**: Replace `YOUR_USERNAME` with your actual Windows username!
 
 **Example with real paths:**
 ```json
 {
   "mcpServers": {
     "bc-workshop-server": {
-      "command": "C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
+      "command": "C:/Users/JavierArmestoGonzÃ¡le/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
       "args": [
-        "C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
+        "C:/Users/JavierArmestoGonzÃ¡le/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
       ],
       "env": {
-        "PYTHONPATH": "C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab"
+        "PYTHONPATH": "C:/Users/JavierArmestoGonzÃ¡le/Documents/AL/Workshop-MCP-Server-Directions-Lab"
       }
     }
   }
@@ -1281,10 +1281,10 @@ Try these prompts in Claude Desktop:
 
 **Expected responses:**
 Claude should be able to:
-- ✅ List the 6 available tools (get_customers, get_items, etc.)
-- ✅ Fetch real customer data from Business Central
-- ✅ Show item catalog with prices and stock
-- ✅ Display currency exchange rates
+- âœ… List the 6 available tools (get_customers, get_items, etc.)
+- âœ… Fetch real customer data from Business Central
+- âœ… Show item catalog with prices and stock
+- âœ… Display currency exchange rates
 
 **Visual verification:**
 
@@ -1304,9 +1304,9 @@ If Claude Desktop connects successfully, you should see:
 
 **In your terminal (if server is running):**
 ```
-INFO __main__: 🌟 Starting MCP Workshop Server with STDIO transport
-INFO __main__: 📡 Ready for Claude Desktop connection
-INFO server_workshop: 📞 Calling tool: get_customers with arguments: {'top': 5}
+INFO __main__: ðŸŒŸ Starting MCP Workshop Server with STDIO transport
+INFO __main__: ðŸ“¡ Ready for Claude Desktop connection
+INFO server_workshop: ðŸ“ž Calling tool: get_customers with arguments: {'top': 5}
 INFO httpx: HTTP Request: POST https://login.microsoftonline.com/...
 ```
 
@@ -1331,42 +1331,42 @@ Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" | ConvertFrom-Json
 
 **Common mistakes:**
 ```json
-// ❌ WRONG - Line break in the middle of a string
+// âŒ WRONG - Line break in the middle of a string
 {
   "command": "C:/Users/MyName/Documents/Workshop
 /python.exe"
 }
 
-// ✅ CORRECT - String on single line
+// âœ… CORRECT - String on single line
 {
   "command": "C:/Users/MyName/Documents/Workshop/python.exe"
 }
 ```
 
 **Checklist before saving:**
-- ✅ All paths use forward slashes `/` (not backslashes `\`)
-- ✅ No line breaks within string values
-- ✅ All brackets and braces match `{ }` and `[ ]`
-- ✅ Commas after each property (except the last one)
+- âœ… All paths use forward slashes `/` (not backslashes `\`)
+- âœ… No line breaks within string values
+- âœ… All brackets and braces match `{ }` and `[ ]`
+- âœ… Commas after each property (except the last one)
 
 **After fixing:**
 1. Save the file
 2. Close Claude Desktop completely (check system tray)
 3. Restart Claude Desktop
 
-> 💡 **Quick Fix**: If you're stuck, use the automatic script: `.\configure_claude.ps1`
+> ðŸ’¡ **Quick Fix**: If you're stuck, use the automatic script: `.\configure_claude.ps1`
 
 ---
 
-## 🎓 Step 9: Practical Exercises
+## ðŸŽ“ Step 9: Practical Exercises
 
 Welcome to the hands-on section! You'll learn by doing:
 - **Part A (Exercises 1-2)**: Test existing MCP tools with **Business Central Standard APIs**
 - **Part B (Exercises 3-4)**: Implement new tools using **Business Central Standard APIs**
 
-> 🏭 **Workshop Objective**: We connect directly to **Business Central Standard APIs v2.0**  
-> 🎯 **Focus**: Real API integration with `/companies`, `/customers`, `/employees`, `/jobs`  
-> ⚠️ **Mock Data**: Only used as exceptional fallback when BC credentials are unavailable
+> ðŸ­ **Workshop Objective**: We connect directly to **Business Central Standard APIs v2.0**  
+> ðŸŽ¯ **Focus**: Real API integration with `/companies`, `/customers`, `/employees`, `/jobs`  
+> âš ï¸ **Mock Data**: Only used as exceptional fallback when BC credentials are unavailable
 
 ---
 
@@ -1376,7 +1376,7 @@ Welcome to the hands-on section! You'll learn by doing:
 
 **Goal**: Learn how to use MCP tools that connect to **Business Central Standard API**.
 
-**Business Central API Used**: `GET /api/v2.0/companies({id})/customers` ✅
+**Business Central API Used**: `GET /api/v2.0/companies({id})/customers` âœ…
 
 **Tools to test**:
 1. `get_customers` - Calls Business Central Standard API
@@ -1403,13 +1403,13 @@ Welcome to the hands-on section! You'll learn by doing:
 **Study the real API implementation**:
 - Open `src/client.py`
 - Find `get_customers()` method
-- See how it calls: `f"{self.base_url}/customers"` ← **This is the standard BC API!**
+- See how it calls: `f"{self.base_url}/customers"` â† **This is the standard BC API!**
 - Notice the OAuth 2.0 authentication with `self.headers`
 
 **API Endpoints this exercise uses**:
 - `GET /api/v2.0/companies({companyId})/customers`
-- Standard Business Central API v2.0 ✅
-- OAuth 2.0 authentication ✅
+- Standard Business Central API v2.0 âœ…
+- OAuth 2.0 authentication âœ…
 
 ---
 
@@ -1417,7 +1417,7 @@ Welcome to the hands-on section! You'll learn by doing:
 
 **Goal**: Use a tool that calls Business Central's **standard `/currencies` API**.
 
-**Business Central API Used**: `GET /api/v2.0/companies({id})/currencies` ✅
+**Business Central API Used**: `GET /api/v2.0/companies({id})/currencies` âœ…
 
 **Step-by-step testing**:
 
@@ -1431,7 +1431,7 @@ Welcome to the hands-on section! You'll learn by doing:
 2. **Study the standard API implementation**:
    - Open `src/client.py`
    - Find `get_currency_exchange_rates()` method
-   - See how it calls: `f"{self.base_url}/currencies"` ← **Standard BC API endpoint!**
+   - See how it calls: `f"{self.base_url}/currencies"` â† **Standard BC API endpoint!**
    - This is a **read-only** operation on a standard Business Central entity
 
 **Try these with Business Central API**:
@@ -1447,17 +1447,17 @@ Welcome to the hands-on section! You'll learn by doing:
 
 Now you'll add **2 new tools** that connect to **Business Central Standard APIs**. Each exercise shows you how to implement real API integration with Business Central.
 
-> 🏭 **Primary Objective**: Connect to Business Central Standard API v2.0  
-> 🎯 **Learning Goal**: Build MCP tools that call real BC endpoints  
-> 📝 **Mock Data**: Only as exceptional fallback when BC credentials unavailable
+> ðŸ­ **Primary Objective**: Connect to Business Central Standard API v2.0  
+> ðŸŽ¯ **Learning Goal**: Build MCP tools that call real BC endpoints  
+> ðŸ“ **Mock Data**: Only as exceptional fallback when BC credentials unavailable
 
 ### Exercise 3: Implement `get_employees` Tool (Hands-on Implementation)
 
 **Goal**: Add a new tool that fetches employees using the **standard Business Central API**.
 
-**Business Central API Used**: `GET /api/v2.0/companies({id})/employees` ✅
+**Business Central API Used**: `GET /api/v2.0/companies({id})/employees` âœ…
 
-> 🔧 **This tool needs to be implemented** - you'll build it from scratch!
+> ðŸ”§ **This tool needs to be implemented** - you'll build it from scratch!
 
 **What you'll learn**:
 
@@ -1495,11 +1495,11 @@ async def get_employees(self, top: int = 20) -> List[Dict]:
 ```
 
 **Key points about this implementation**:
-- ✅ Uses the standard `employees` endpoint
-- ✅ Follows the same pattern as existing tools (`get_customers`, `get_items`)
-- ✅ Uses `_request()` method for consistent API handling and authentication
-- ✅ Supports `$top` parameter for limiting results
-- ✅ Returns the `value` array from Business Central API response
+- âœ… Uses the standard `employees` endpoint
+- âœ… Follows the same pattern as existing tools (`get_customers`, `get_items`)
+- âœ… Uses `_request()` method for consistent API handling and authentication
+- âœ… Supports `$top` parameter for limiting results
+- âœ… Returns the `value` array from Business Central API response
 
 #### Step 3.2: Register Tool in Server (server_workshop.py)
 
@@ -1509,7 +1509,7 @@ async def get_employees(self, top: int = 20) -> List[Dict]:
 # Employees Tool - Standard BC API
 types.Tool(
     name="get_employees",
-    description="👥 Get employees from Business Central using standard API",
+    description="ðŸ‘¥ Get employees from Business Central using standard API",
     inputSchema={
         "type": "object",
         "properties": {
@@ -1528,7 +1528,7 @@ types.Tool(
 ```python
 elif tool_name == "get_employees":
     top = arguments.get("top", 20)
-    logger.info(f"📞 Calling tool: {tool_name} with top={top}")
+    logger.info(f"ðŸ“ž Calling tool: {tool_name} with top={top}")
     
     result = await bc_client.get_employees(top=top)
     
@@ -1555,167 +1555,7 @@ Ask Claude: "List all employees in our BC system"
 **Expected Results**:
 Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/employees` and returns real employee data including names, job titles, contact information, and employment details.
 
-**🎉 Congratulations!** You've implemented a new MCP tool that connects to **Business Central Employees API**.
-
----
-
-#### Step 3.2: Add Tool to Client (src/client.py) - Business Central API Integration
-
-Open `src/client.py` and **add this method** after the `get_currency_exchange_rates()` method (around line 180):
-
-```python
-    async def get_sales_orders(self, top: int = 20) -> List[Dict[str, Any]]:
-        """
-        Get sales orders from Business Central using Standard API v2.0
-        
-        PRIMARY: Calls Business Central Standard API
-        FALLBACK: Uses mock data only if BC credentials unavailable
-        
-        Business Central API: GET /api/v2.0/companies({id})/salesOrders
-        Authentication: OAuth 2.0 with Azure AD
-        
-        Args:
-            top: Maximum number of records to return
-            
-        Returns:
-            List of sales orders from Business Central (or mock data as fallback)
-        """
-        try:
-            # PRIMARY PATH: Business Central Standard API v2.0
-            if self.access_token:
-                logger.info(f"🏭 Calling Business Central Standard API: GET /salesOrders")
-                
-                # Call standard Business Central API
-                endpoint = f"{self.base_url}/salesOrders"
-                params = {"$top": top}
-                
-                async with httpx.AsyncClient() as client:
-                    response = await client.get(
-                        endpoint,
-                        headers=self.headers,  # OAuth 2.0 authentication
-                        params=params,
-                        timeout=30.0
-                    )
-                    response.raise_for_status()
-                    data = response.json()
-                    
-                    logger.info(f"✅ Successfully retrieved {len(data.get('value', []))} sales orders from Business Central")
-                    return data.get("value", [])
-            
-            # FALLBACK PATH: Mock data (exceptional case only)
-            else:
-                logger.warning("🧪 No Business Central credentials - using mock data (not recommended)")
-                return self._get_mock_sales_orders(top)
-                
-        except Exception as e:
-            logger.error(f"❌ Error calling Business Central API: {e}")
-            logger.warning("🧪 Falling back to mock data")
-            return self._get_mock_sales_orders(top)
-    
-    def _get_mock_sales_orders(self, top: int = 20) -> List[Dict[str, Any]]:
-        """Load sales orders from CSV file (fallback only when BC unavailable)"""
-        csv_path = Path(__file__).parent.parent / "data" / "sales_orders.csv"
-        
-        if not csv_path.exists():
-            logger.warning("📁 Mock data file not found: sales_orders.csv")
-            return []
-        
-        orders = []
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in list(reader)[:top]:
-                orders.append(row)
-        
-        logger.info(f"📁 Loaded {len(orders)} mock sales orders (fallback mode)")
-        return orders
-```
-
-**Key Learning Points:**
-
-1. **Primary Path**: Calls `GET /api/v2.0/companies({id})/salesOrders` (Business Central Standard API)
-2. **Authentication**: Uses OAuth 2.0 with `self.headers` 
-3. **Parameters**: Supports `$top` parameter for limiting results
-4. **Fallback**: Mock data only when Business Central credentials unavailable
-5. **Logging**: Clear distinction between BC API calls and mock data usage
-
----
-
-#### Step 3.3: Register Tool in Server (server_workshop.py)
-
-Open `server_workshop.py`:
-
-**1. Add tool definition** in `handle_list_tools()` - add this BEFORE the closing bracket (around line 110):
-
-```python
-            # Sales Orders Tool - Standard BC API
-            types.Tool(
-                name="get_sales_orders",
-                description="📋 Get sales orders from Business Central using standard API",
-                inputSchema={
-                    "type": "object",
-                    "properties": {
-                        "top": {
-                            "type": "number",
-                            "description": "Maximum number of orders to return (default: 20)",
-                            "default": 20
-                        }
-                    }
-                }
-            ),
-```
-
-**2. Add tool handler** in `handle_call_tool()` - add this BEFORE the final `else` clause (around line 200):
-
-```python
-        elif tool_name == "get_sales_orders":
-            top = arguments.get("top", 20)
-            logger.info(f"📞 Calling tool: {tool_name} with top={top}")
-            
-            result = await bc_client.get_sales_orders(top=top)
-            
-            return types.CallToolResult(content=[
-                types.TextContent(
-                    type="text",
-                    text=json.dumps(result, indent=2, ensure_ascii=False)
-                )
-            ])
-```
-
----
-
-#### Step 3.4: Test Your New Tool with Business Central API
-
-**1. Restart Claude Desktop**:
-
-- Close Claude Desktop completely
-- Reopen it (MCP server will restart automatically)
-
-**2. Verify the tool appears**:
-
-- In Claude Desktop, you should now see **7 tools** (was 6 before)
-- Look for `get_sales_orders` in the list
-
-**3. Test the tool with Business Central API**:
-
-```text
-Ask Claude: "Show me the sales orders from Business Central"
-Ask Claude: "Get the top 5 sales orders from our BC system"
-Ask Claude: "List recent sales orders with customer information"
-```
-
-**Expected Results**:
-
-✅ Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/salesOrders` and returns real sales order data from your BC environment with actual customer names, order numbers, amounts, and statuses.
-
-**Key API Integration Points**:
-
-1. **Standard BC API Endpoint**: `/api/v2.0/companies({companyId})/salesOrders`
-2. **OAuth 2.0 Authentication**: Uses Azure AD access token
-3. **Query Parameters**: Supports `$top` for limiting results
-4. **Error Handling**: Graceful fallback to mock data if API unavailable
-5. **Logging**: Clear distinction between API calls and mock data usage
-
-**🎉 Congratulations!** You've implemented a new MCP tool that connects to **Business Central Employees API**.
+**ðŸŽ‰ Congratulations!** You've implemented a new MCP tool that connects to **Business Central Employees API**.
 
 ---
 
@@ -1723,9 +1563,9 @@ Ask Claude: "List recent sales orders with customer information"
 
 **Goal**: Add another tool using Business Central's standard `/jobs` API (projects are called "jobs" in BC).
 
-**Business Central API Used**: `GET /api/v2.0/companies({id})/jobs` ✅
+**Business Central API Used**: `GET /api/v2.0/companies({id})/jobs` âœ…
 
-> 🔧 **This tool also needs to be implemented** - follow these steps:
+> ðŸ”§ **This tool also needs to be implemented** - follow these steps:
 
 #### Step 4.1: Add Tool to Client (src/client.py)
 
@@ -1763,7 +1603,7 @@ async def get_projects(self, top: int = 20) -> List[Dict]:
 # Projects Tool - Standard BC API
 types.Tool(
     name="get_projects",
-    description="� Get projects (jobs) from Business Central using standard API",
+    description="ðŸ—ï¸ Get projects (jobs) from Business Central using standard API",
     inputSchema={
         "type": "object",
         "properties": {
@@ -1782,7 +1622,7 @@ types.Tool(
 ```python
 elif tool_name == "get_projects":
     top = arguments.get("top", 20)
-    logger.info(f"📞 Calling tool: {tool_name} with top={top}")
+    logger.info(f"ðŸ“ž Calling tool: {tool_name} with top={top}")
     
     result = await bc_client.get_projects(top=top)
     
@@ -1794,124 +1634,24 @@ elif tool_name == "get_projects":
     ])
 ```
 
+---
+
 #### Step 4.3: Test Your Projects Tool
 
-**1. Restart Claude Desktop**
+**1. Restart Claude Desktop** to load the new tool
 
 **2. Test the tool**:
 
 ```text
 Ask Claude: "Show me the projects from Business Central"
 Ask Claude: "Get the top 5 projects"
-Ask Claude: "List all jobs in our BC system"
+Ask Claude: "List all projects (jobs) in our BC system"
 ```
 
 **Expected Results**:
-Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/jobs` and returns real project data including project numbers, descriptions, status, customer information, and project details.
+Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/jobs` and returns real project data including job numbers, descriptions, customer information, and project status.
 
-**🎉 Congratulations!** You've implemented two new MCP tools that connect to **Business Central Standard APIs** for employees and projects!
-
----
-
-## 🎯 What You've Learned
-
-### Part A (Testing):
-✅ How to test MCP tools in Claude Desktop  
-✅ How prompts work  
-✅ Understanding standard Business Central APIs  
-
-### Part B (Implementation):
-✅ **Tool structure**: name, description, inputSchema  
-✅ **Client methods**: calling BC APIs + mock data fallback  
-✅ **Tool handlers**: processing requests and returning results  
-✅ **Mock data**: CSV files for testing  
-✅ **Standard BC APIs**: `/employees`, `/jobs`  
-
-### Key Concepts:
-- **Standard APIs**: No custom extensions needed
-- **Mock data**: Works without BC credentials
-- **Copy-paste learning**: See complete working examples
-- **Incremental testing**: Test after each change
-
----
-
-## 🚀 Next Steps
-
-Now that you understand the pattern, you can add more tools using other **standard Business Central APIs**:
-
-- `salesInvoices` - Sales invoices
-- `purchaseOrders` - Purchase orders
-- `purchaseInvoices` - Purchase invoices
-- `vendors` - Vendor list (similar to customers)
-- `dimensions` - Dimension values
-- `shipmentMethods` - Shipping methods
-
-**Pattern to follow**:
-1. Create mock CSV data
-2. Add async method in `client.py`
-3. Register tool in `server_workshop.py` (definition + handler)
-4. Test in Claude Desktop
-
-**Happy coding!** 🎉
-
----
-
-## 🔍 Troubleshooting
-
-### Server won't start
-
-**Error**: `ModuleNotFoundError: No module named 'mcp'`
-```bash
-# Solution: Install dependencies
-pip install -r requirements.txt
-```
-
-**Error**: `Port 8000 is already in use`
-```bash
-# Solution: Change port in .env
-SERVER_PORT=8001
-
-# Or find and kill the process using port 8000
-# Windows:
-netstat -ano | findstr :8000
-taskkill /PID <process_id> /F
-
-# Linux/macOS:
-lsof -ti:8000 | xargs kill -9
-```
-
-### Configuration issues
-
-**Error**: `AZURE_CLIENT_ID not found in environment`
-```bash
-# Solution: Create .env file
-cp .env.example .env
-# Then edit .env with your credentials
-```
-
-### Business Central API errors
-
-**Error**: `401 Unauthorized`
-- Check Azure AD credentials in `.env`
-- Verify app registration has correct API permissions
-- Ensure token is not expired
-
-**Error**: `404 Not Found`
-- Verify BC_ENVIRONMENT and BC_COMPANY_ID are correct
-- Check if company exists in Business Central
-
-### Claude Desktop integration issues
-
-**Server not showing in Claude**:
-1. Check configuration file path is correct
-2. Use absolute paths, not relative
-3. Restart Claude Desktop completely
-4. Check Claude Desktop logs for errors
-
-**Tools not working**:
-1. Ensure server is running
-2. Check server logs for errors
-3. Verify MCP protocol requests in logs
+**ðŸŽ‰ Congratulations!** You've implemented a new MCP tool that connects to **Business Central Projects (Jobs) API**.
 
 ---
 
@@ -1919,11 +1659,11 @@ cp .env.example .env
 
 You've completed the MCP Server Workshop! You now understand:
 
-- ✅ MCP architecture and protocol
-- ✅ How to configure and run an MCP server
-- ✅ Business Central API integration
-- ✅ Creating tools, prompts, and resources
-- ✅ Testing with Claude Desktop
+- âœ… MCP architecture and protocol
+- âœ… How to configure and run an MCP server
+- âœ… Business Central API integration
+- âœ… Creating tools, prompts, and resources
+- âœ… Testing with Claude Desktop
 
 ### Next Steps
 
@@ -1940,4 +1680,4 @@ You've completed the MCP Server Workshop! You now understand:
 
 ---
 
-**Happy coding!** 🚀
+**🎊 Congratulations on completing the MCP Server Workshop!** You've successfully learned how to build custom MCP tools that integrate with Business Central APIs. Keep building amazing AI-powered solutions! 🚀 ðŸš€
