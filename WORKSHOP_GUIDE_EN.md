@@ -1361,170 +1361,263 @@ Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" | ConvertFrom-Json
 ## 🎓 Step 9: Practical Exercises
 
 Welcome to the hands-on section! You'll learn by doing:
-- **Part A (Exercises 1-2)**: Test existing MCP tools
-- **Part B (Exercises 3-4)**: Implement new tools using Business Central Standard APIs
+- **Part A (Exercises 1-2)**: Test existing MCP tools with **Business Central Standard APIs**
+- **Part B (Exercises 3-4)**: Implement new tools using **Business Central Standard APIs**
 
-> ⚠️ **Important**: We use only **Standard Business Central APIs** (no custom extensions)
+> 🏭 **Workshop Objective**: We connect directly to **Business Central Standard APIs v2.0**  
+> 🎯 **Focus**: Real API integration with `/companies`, `/customers`, `/salesOrders`, `/paymentTerms`  
+> ⚠️ **Mock Data**: Only used as exceptional fallback when BC credentials are unavailable
 
 ---
 
-## Part A: Testing Existing Tools
+## Part A: Testing Existing Tools with Business Central APIs
 
-### Exercise 1: Test Customer Tools
+### Exercise 1: Test Customer Tools (Standard BC API)
 
-**Goal**: Learn how to use existing MCP tools through Claude Desktop.
+**Goal**: Learn how to use MCP tools that connect to **Business Central Standard API**.
+
+**Business Central API Used**: `GET /api/v2.0/companies({id})/customers` ✅
 
 **Tools to test**:
-1. `get_customers` - Lists customers from Business Central
-2. `customer_analysis` prompt - Detailed customer analysis template
+1. `get_customers` - Calls Business Central Standard API
+2. `customer_analysis` prompt - Analyzes real BC customer data
 
 **Step-by-step testing**:
 
 1. **Open Claude Desktop** (ensure your MCP server is configured from Step 8)
 
-2. **Test get_customers tool**:
+2. **Test get_customers tool with real BC API**:
    ```
-   Ask Claude: "Show me the top 5 customers"
-   ```
-   
-   **Expected result**: Claude calls `get_customers` and shows customer data with names, IDs, and balances.
-
-3. **Test customer_analysis prompt**:
-   ```
-   Ask Claude: "Analyze customer Adatum Corporation"
+   Ask Claude: "Show me the top 5 customers from Business Central"
    ```
    
-   **Expected result**: Claude uses the `customer_analysis` prompt template to create a detailed analysis.
+   **Expected result**: Claude calls Business Central API and shows real customer data with names, IDs, and balances.
 
-**Study the code**:
-- Open `server_workshop.py`
-- Find `handle_list_tools()` → look for `get_customers` tool definition
-- Find `handle_list_prompts()` → look for `customer_analysis` prompt
-- See how the tool schema defines parameters (`top` parameter)
+3. **Test customer_analysis prompt with BC data**:
+   ```
+   Ask Claude: "Analyze customer data from Business Central"
+   ```
+   
+   **Expected result**: Claude uses real Business Central customer data for analysis.
 
-**More prompts to try**:
-- "List all customers with their balances"
-- "Show me customer details for Adatum"
-- "What customers do we have in the system?"
+**Study the real API implementation**:
+- Open `src/client.py`
+- Find `get_customers()` method
+- See how it calls: `f"{self.base_url}/customers"` ← **This is the standard BC API!**
+- Notice the OAuth 2.0 authentication with `self.headers`
+
+**API Endpoints this exercise uses**:
+- `GET /api/v2.0/companies({companyId})/customers`
+- Standard Business Central API v2.0 ✅
+- OAuth 2.0 authentication ✅
 
 ---
 
-### Exercise 2: Test Currency Exchange Rates
+### Exercise 2: Test Currency Exchange Rates (Standard BC API)
 
-**Goal**: Use a tool that calls Business Central's standard `/currencies` API.
+**Goal**: Use a tool that calls Business Central's **standard `/currencies` API**.
 
-**API Used**: `GET /api/v2.0/companies({id})/currencies` (Standard BC API)
+**Business Central API Used**: `GET /api/v2.0/companies({id})/currencies` ✅
 
 **Step-by-step testing**:
 
-1. **Test the tool in Claude Desktop**:
+1. **Test the tool with Business Central API**:
    ```
-   Ask Claude: "What are the current currency exchange rates?"
+   Ask Claude: "What are the current currency exchange rates from Business Central?"
    ```
    
-   **Expected result**: List of currencies (EUR, USD, GBP, etc.) with their exchange rates.
+   **Expected result**: Real currency data from your BC environment with exchange rates.
 
-2. **Study the implementation**:
+2. **Study the standard API implementation**:
    - Open `src/client.py`
    - Find `get_currency_exchange_rates()` method
-   - See how it calls the **standard** Business Central API: `f"{self.base_url}/currencies"`
-   - This is a **read-only** operation on a standard entity
+   - See how it calls: `f"{self.base_url}/currencies"` ← **Standard BC API endpoint!**
+   - This is a **read-only** operation on a standard Business Central entity
 
-**Try these variations**:
-- "Show me all available currencies"
-- "What's the exchange rate for EUR?"
-- "List currency rates"
+**Try these with Business Central API**:
+- "Show me all available currencies from Business Central"
+- "What's the exchange rate for EUR in our BC system?"
+- "List currency rates from Business Central"
 
-**Key Learning**: This tool demonstrates calling a **standard Business Central API endpoint** without any custom extensions.
+**Key Learning**: This tool demonstrates calling a **standard Business Central API endpoint** with OAuth 2.0 authentication - no custom extensions needed.
 
 ---
 
-## Part B: Implementing New Tools (Copy-Paste & Learn)
+## Part B: Implementing New Tools with Business Central Standard APIs
 
-Now you'll add **2 new tools** using standard Business Central APIs. Each exercise provides complete code ready to copy-paste.
+Now you'll add **2 new tools** that connect to **Business Central Standard APIs**. Each exercise shows you how to implement real API integration with Business Central.
 
-### Exercise 3: Implement `get_sales_orders` Tool
+> 🏭 **Primary Objective**: Connect to Business Central Standard API v2.0  
+> 🎯 **Learning Goal**: Build MCP tools that call real BC endpoints  
+> 📝 **Mock Data**: Only as exceptional fallback when BC credentials unavailable
 
-**Goal**: Add a new tool that fetches sales orders using the **standard Business Central API**.
+### Exercise 3: Implement `get_employees` Tool (Hands-on Implementation)
 
-**API Used**: `GET /api/v2.0/companies({id})/salesOrders` (Standard BC API)
+**Goal**: Add a new tool that fetches employees using the **standard Business Central API**.
+
+**Business Central API Used**: `GET /api/v2.0/companies({id})/employees` ✅
+
+> 🔧 **This tool needs to be implemented** - you'll build it from scratch!
 
 **What you'll learn**:
-- How to define a new MCP tool
-- How to add parameters (limit, filters)
-- How to handle the tool call
-- How to work with mock data
+
+- How to analyze existing MCP tool implementations
+- Business Central API integration patterns in real code
+- Parameter handling with filters and limits
+- Adding new tools to an existing MCP server
 
 ---
 
-#### Step 3.1: Create Mock Data File
+#### Step 3.1: Add Tool to Client (src/client.py)
 
-First, create mock data for testing without Business Central access:
+Open `src/client.py` and **add this method** after the `get_currency_exchange_rates()` method (around line 268):
 
-```powershell
-# Create the mock data file
-New-Item -Path ".\data\sales_orders.csv" -ItemType File
+```python
+async def get_employees(self, top: int = 20) -> List[Dict]:
+    """
+    Gets employees from Business Central using Standard API v2.0
+    
+    Business Central API: GET /api/v2.0/companies({id})/employees
+    Authentication: OAuth 2.0 with Azure AD
+    
+    Args:
+        top: Maximum number of employees to return (default 20)
+        
+    Returns:
+        List of employees from Business Central
+    """
+    res = await self._request("GET", "employees", params={"$top": top})
+    if res:
+        logger.info(f"Employees retrieved: {len(res.get('value', []))}")
+    else:
+        logger.error("Could not retrieve employees list.")
+    return res.get("value", []) if res else []
 ```
 
-**Copy this content** into `data/sales_orders.csv`:
+**Key points about this implementation**:
+- ✅ Uses the standard `employees` endpoint
+- ✅ Follows the same pattern as existing tools (`get_customers`, `get_items`)
+- ✅ Uses `_request()` method for consistent API handling and authentication
+- ✅ Supports `$top` parameter for limiting results
+- ✅ Returns the `value` array from Business Central API response
 
-```csv
-id,number,orderDate,customerNumber,customerName,totalAmountExcludingTax,currencyCode,status
-SO001,1001,2024-01-15,10000,Adatum Corporation,5000.00,USD,Open
-SO002,1002,2024-01-20,20000,Contoso Ltd,7500.50,EUR,Open
-SO003,1003,2024-01-25,10000,Adatum Corporation,3200.00,USD,Shipped
-SO004,1004,2024-02-01,30000,Fabrikam Inc,12000.00,GBP,Open
-SO005,1005,2024-02-05,20000,Contoso Ltd,8500.00,EUR,Invoiced
+#### Step 3.2: Register Tool in Server (server_workshop.py)
+
+**1. Add to tools list** in `handle_list_tools()` method (around line 110):
+
+```python
+# Employees Tool - Standard BC API
+types.Tool(
+    name="get_employees",
+    description="👥 Get employees from Business Central using standard API",
+    inputSchema={
+        "type": "object",
+        "properties": {
+            "top": {
+                "type": "number",
+                "description": "Maximum number of employees to return (default: 20)",
+                "default": 20
+            }
+        }
+    }
+),
 ```
+
+**2. Add tool handler** in `handle_call_tool()` method (around line 200):
+
+```python
+elif tool_name == "get_employees":
+    top = arguments.get("top", 20)
+    logger.info(f"📞 Calling tool: {tool_name} with top={top}")
+    
+    result = await bc_client.get_employees(top=top)
+    
+    return types.CallToolResult(content=[
+        types.TextContent(
+            type="text",
+            text=json.dumps(result, indent=2, ensure_ascii=False)
+        )
+    ])
+```
+
+#### Step 3.3: Test Your New Employees Tool
+
+**1. Restart Claude Desktop** to load the new tool
+
+**2. Test the tool**:
+
+```text
+Ask Claude: "Show me the employees from Business Central"
+Ask Claude: "Get the top 5 employees"
+Ask Claude: "List all employees in our BC system"
+```
+
+**Expected Results**:
+Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/employees` and returns real employee data including names, job titles, contact information, and employment details.
+
+**🎉 Congratulations!** You've implemented a new MCP tool that connects to **Business Central Employees API**.
 
 ---
 
-#### Step 3.2: Add Tool to Client (src/client.py)
+#### Step 3.2: Add Tool to Client (src/client.py) - Business Central API Integration
 
 Open `src/client.py` and **add this method** after the `get_currency_exchange_rates()` method (around line 180):
 
 ```python
     async def get_sales_orders(self, top: int = 20) -> List[Dict[str, Any]]:
         """
-        Get sales orders from Business Central
-        Uses standard API: GET /salesOrders
+        Get sales orders from Business Central using Standard API v2.0
+        
+        PRIMARY: Calls Business Central Standard API
+        FALLBACK: Uses mock data only if BC credentials unavailable
+        
+        Business Central API: GET /api/v2.0/companies({id})/salesOrders
+        Authentication: OAuth 2.0 with Azure AD
         
         Args:
             top: Maximum number of records to return
             
         Returns:
-            List of sales orders
+            List of sales orders from Business Central (or mock data as fallback)
         """
         try:
-            # Use mock data if no Business Central credentials
-            if not self.access_token:
-                logger.info("📁 Using mock sales orders data")
+            # PRIMARY PATH: Business Central Standard API v2.0
+            if self.access_token:
+                logger.info(f"🏭 Calling Business Central Standard API: GET /salesOrders")
+                
+                # Call standard Business Central API
+                endpoint = f"{self.base_url}/salesOrders"
+                params = {"$top": top}
+                
+                async with httpx.AsyncClient() as client:
+                    response = await client.get(
+                        endpoint,
+                        headers=self.headers,  # OAuth 2.0 authentication
+                        params=params,
+                        timeout=30.0
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    
+                    logger.info(f"✅ Successfully retrieved {len(data.get('value', []))} sales orders from Business Central")
+                    return data.get("value", [])
+            
+            # FALLBACK PATH: Mock data (exceptional case only)
+            else:
+                logger.warning("🧪 No Business Central credentials - using mock data (not recommended)")
                 return self._get_mock_sales_orders(top)
-            
-            # Call standard Business Central API
-            endpoint = f"{self.base_url}/salesOrders"
-            params = {"$top": top}
-            
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    endpoint,
-                    headers=self.headers,
-                    params=params,
-                    timeout=30.0
-                )
-                response.raise_for_status()
-                data = response.json()
-                return data.get("value", [])
                 
         except Exception as e:
-            logger.error(f"Error fetching sales orders: {e}")
+            logger.error(f"❌ Error calling Business Central API: {e}")
+            logger.warning("🧪 Falling back to mock data")
             return self._get_mock_sales_orders(top)
     
     def _get_mock_sales_orders(self, top: int = 20) -> List[Dict[str, Any]]:
-        """Load sales orders from CSV file"""
+        """Load sales orders from CSV file (fallback only when BC unavailable)"""
         csv_path = Path(__file__).parent.parent / "data" / "sales_orders.csv"
         
         if not csv_path.exists():
+            logger.warning("📁 Mock data file not found: sales_orders.csv")
             return []
         
         orders = []
@@ -1533,8 +1626,17 @@ Open `src/client.py` and **add this method** after the `get_currency_exchange_ra
             for row in list(reader)[:top]:
                 orders.append(row)
         
+        logger.info(f"📁 Loaded {len(orders)} mock sales orders (fallback mode)")
         return orders
 ```
+
+**Key Learning Points:**
+
+1. **Primary Path**: Calls `GET /api/v2.0/companies({id})/salesOrders` (Business Central Standard API)
+2. **Authentication**: Uses OAuth 2.0 with `self.headers` 
+3. **Parameters**: Supports `$top` parameter for limiting results
+4. **Fallback**: Mock data only when Business Central credentials unavailable
+5. **Logging**: Clear distinction between BC API calls and mock data usage
 
 ---
 
@@ -1581,73 +1683,75 @@ Open `server_workshop.py`:
 
 ---
 
-#### Step 3.4: Test Your New Tool
+#### Step 3.4: Test Your New Tool with Business Central API
 
 **1. Restart Claude Desktop**:
-   - Close Claude Desktop completely
-   - Reopen it (MCP server will restart automatically)
+
+- Close Claude Desktop completely
+- Reopen it (MCP server will restart automatically)
 
 **2. Verify the tool appears**:
-   - In Claude Desktop, you should now see **7 tools** (was 6 before)
-   - Look for `get_sales_orders` in the list
 
-**3. Test the tool**:
-   ```
-   Ask Claude: "Show me the sales orders"
-   Ask Claude: "Get the top 5 sales orders"
-   Ask Claude: "List sales orders for customer Adatum"
-   ```
+- In Claude Desktop, you should now see **7 tools** (was 6 before)
+- Look for `get_sales_orders` in the list
 
-**Expected result**: Claude calls your new `get_sales_orders` tool and shows the data from `sales_orders.csv`.
+**3. Test the tool with Business Central API**:
 
-**🎉 Congratulations!** You just implemented your first MCP tool using a **standard Business Central API**.
-
----
-
-### Exercise 4: Implement `get_payment_terms` Tool
-
-**Goal**: Add another tool using Business Central's standard `/paymentTerms` API.
-
-**API Used**: `GET /api/v2.0/companies({id})/paymentTerms` (Standard BC API)
-
-**What's different**: This tool has **no parameters** - it just lists all payment terms.
-
----
-
-#### Step 4.1: Create Mock Data File
-
-```powershell
-# Create the mock data file
-New-Item -Path ".\data\payment_terms.csv" -ItemType File
+```text
+Ask Claude: "Show me the sales orders from Business Central"
+Ask Claude: "Get the top 5 sales orders from our BC system"
+Ask Claude: "List recent sales orders with customer information"
 ```
 
-**Copy this content** into `data/payment_terms.csv`:
+**Expected Results**:
 
-```csv
-id,code,displayName,dueDateCalculation,discountDateCalculation,discountPercent
-PT001,NET30,Net 30 Days,30D,0D,0
-PT002,NET15,Net 15 Days,15D,0D,0
-PT003,COD,Cash on Delivery,0D,0D,0
-PT004,210NET30,2/10 Net 30,30D,10D,2
-PT005,NET60,Net 60 Days,60D,0D,0
-```
+✅ Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/salesOrders` and returns real sales order data from your BC environment with actual customer names, order numbers, amounts, and statuses.
+
+**Key API Integration Points**:
+
+1. **Standard BC API Endpoint**: `/api/v2.0/companies({companyId})/salesOrders`
+2. **OAuth 2.0 Authentication**: Uses Azure AD access token
+3. **Query Parameters**: Supports `$top` for limiting results
+4. **Error Handling**: Graceful fallback to mock data if API unavailable
+5. **Logging**: Clear distinction between API calls and mock data usage
+
+**🎉 Congratulations!** You've implemented a new MCP tool that connects to **Business Central Employees API**.
 
 ---
 
-#### Step 4.2: Add Tool to Client (src/client.py)
+### Exercise 4: Implement `get_projects` Tool
 
-Add this method after `get_sales_orders()`:
+**Goal**: Add another tool using Business Central's standard `/jobs` API (projects are called "jobs" in BC).
+
+**Business Central API Used**: `GET /api/v2.0/companies({id})/jobs` ✅
+
+> 🔧 **This tool also needs to be implemented** - follow these steps:
+
+#### Step 4.1: Add Tool to Client (src/client.py)
+
+Add this method after `get_employees()`:
 
 ```python
-    async def get_payment_terms(self) -> List[Dict[str, Any]]:
-        """
-        Get payment terms from Business Central
-        Uses standard API: GET /paymentTerms
+async def get_projects(self, top: int = 20) -> List[Dict]:
+    """
+    Gets projects (jobs) from Business Central using Standard API v2.0
+    
+    Business Central API: GET /api/v2.0/companies({id})/jobs
+    Authentication: OAuth 2.0 with Azure AD
+    
+    Args:
+        top: Maximum number of projects to return (default 20)
         
-        Returns:
-            List of payment terms
-        """
-        try:
+    Returns:
+        List of projects from Business Central
+    """
+    res = await self._request("GET", "jobs", params={"$top": top})
+    if res:
+        logger.info(f"Projects retrieved: {len(res.get('value', []))}")
+    else:
+        logger.error("Could not retrieve projects list.")
+    return res.get("value", []) if res else []
+```
             # Use mock data if no Business Central credentials
             if not self.access_token:
                 logger.info("📁 Using mock payment terms data")
@@ -1688,56 +1792,61 @@ Add this method after `get_sales_orders()`:
 
 ---
 
-#### Step 4.3: Register Tool in Server (server_workshop.py)
+#### Step 4.2: Register Tool in Server (server_workshop.py)
 
 **1. Add tool definition** in `handle_list_tools()`:
 
 ```python
-            # Payment Terms Tool - Standard BC API
-            types.Tool(
-                name="get_payment_terms",
-                description="💳 Get payment terms from Business Central using standard API",
-                inputSchema={
-                    "type": "object",
-                    "properties": {}
-                }
-            ),
+# Projects Tool - Standard BC API
+types.Tool(
+    name="get_projects",
+    description="� Get projects (jobs) from Business Central using standard API",
+    inputSchema={
+        "type": "object",
+        "properties": {
+            "top": {
+                "type": "number",
+                "description": "Maximum number of projects to return (default: 20)",
+                "default": 20
+            }
+        }
+    }
+),
 ```
 
 **2. Add tool handler** in `handle_call_tool()`:
 
 ```python
-        elif tool_name == "get_payment_terms":
-            logger.info(f"📞 Calling tool: {tool_name}")
-            
-            result = await bc_client.get_payment_terms()
-            
-            return types.CallToolResult(content=[
-                types.TextContent(
-                    type="text",
-                    text=json.dumps(result, indent=2, ensure_ascii=False)
-                )
-            ])
+elif tool_name == "get_projects":
+    top = arguments.get("top", 20)
+    logger.info(f"📞 Calling tool: {tool_name} with top={top}")
+    
+    result = await bc_client.get_projects(top=top)
+    
+    return types.CallToolResult(content=[
+        types.TextContent(
+            type="text",
+            text=json.dumps(result, indent=2, ensure_ascii=False)
+        )
+    ])
 ```
 
----
-
-#### Step 4.4: Test Your Tool
+#### Step 4.3: Test Your Projects Tool
 
 **1. Restart Claude Desktop**
 
-**2. Verify**:
-   - You should now see **8 tools** total
-   - Look for `get_payment_terms`
+**2. Test the tool**:
 
-**3. Test**:
-   ```
-   Ask Claude: "What payment terms are available?"
-   Ask Claude: "Show me all payment terms"
-   Ask Claude: "List the payment options"
-   ```
+```text
+Ask Claude: "Show me the projects from Business Central"
+Ask Claude: "Get the top 5 projects"
+Ask Claude: "List all jobs in our BC system"
+```
 
-**Expected result**: Claude shows payment terms from your CSV file.
+**Expected Results**:
+Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/jobs` and returns real project data including project numbers, descriptions, status, customer information, and project details.
+
+**🎉 Congratulations!** You've implemented two new MCP tools that connect to **Business Central Standard APIs** for employees and projects!
 
 ---
 

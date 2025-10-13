@@ -3,7 +3,8 @@
 Welcome to the **MCP Server Workshop**! This workshop teaches you to build a complete MCP (Model Context Protocol) server with STDIO transport for Claude Desktop, integrated with Microsoft Dynamics 365 Business Central.
 
 > ⏱️ **Workshop Duration**: 20-30 minutes  
-> 📖 **[Start Here: Complete Workshop Guide →](WORKSHOP_GUIDE_EN.md)**  
+> 📖 **[Complete Workshop Guide →](WORKSHOP_GUIDE_EN.md)**  
+> 🚀 **[Quick Start Guide →](QUICK_START_GUIDE.md)** (Setup + Exercises)  
 > 📊 **Presentation Slides**: [MCP_Server_Custom Directions.pptx](data/MCP_Server_Custom%20Directions.pptx)
 
 ---
