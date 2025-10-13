@@ -89,11 +89,14 @@ chmod +x setup.sh
 ```
 
 The automated scripts will:
-- ✅ Check Python version (3.12+ required)
-- ✅ Create and activate virtual environment
-- ✅ Install all dependencies automatically
-- ✅ Verify the installation works
-- ✅ Show you next steps
+- [OK] Auto-detect Python installation (no PATH required)
+- [OK] Check Python version (3.12+ required)
+- [OK] Create and activate virtual environment
+- [OK] Install all dependencies automatically
+- [OK] Verify the installation works
+- [OK] Show you next steps
+
+**Important**: The setup script automatically finds Python in common locations. You don't need to add Python to your system PATH.
 
 ### 📋 Manual Setup (5 minutes)
 
@@ -124,25 +127,109 @@ cp .env.example .env
 # Edit .env with your Azure AD and Business Central credentials
 
 # 4. Test the server works
-.\workshop-env\Scripts\python.exe server_workshop.py --help
+python test_server.py
 ```
 
-> 💡 **Alternative**: You can also use the full path if needed: `.\workshop-env\Scripts\python.exe server_workshop.py`
+**Expected output**: The test script will show all available MCP tools:
+```
+[SUCCESS] Server responded!
+
+============================================================
+AVAILABLE TOOLS:
+============================================================
+
+1. get_customers - Get customer list from Business Central
+2. get_items - Get items list from Business Central
+3. get_sales_orders - Get sales orders from Business Central
+... (6 tools total)
+
+[SUCCESS] Test completed successfully!
+```
+
+> 💡 **Quick test**: Use `python test_server.py` to verify your server is working correctly
 
 > 🚨 **Having setup issues?** See [SETUP_TROUBLESHOOTING.md](SETUP_TROUBLESHOOTING.md) for common solutions!
 
+### Visual Testing with MCP Inspector (Optional)
+
+Before configuring Claude Desktop, you can test your server visually with **MCP Inspector**:
+
+**Install MCP Inspector:**
+```bash
+# Quick (no installation required)
+npx @modelcontextprotocol/inspector
+
+# Or install globally
+npm install -g @modelcontextprotocol/inspector
+mcp-inspector
+```
+
+**Get Configuration Paths:**
+```powershell
+# Run the configuration paths script
+.\ConfigurationPaths.ps1
+```
+
+This script will display:
+- Python executable path
+- Server script path
+- Workshop path
+- **Claude Desktop format** (JSON with forward slashes `/`)
+- **MCP Inspector format** (Windows with backslashes `\`)
+
+**Configure in MCP Inspector UI:**
+1. **Transport Type**: Select `STDIO`
+2. **Command**: Paste the `python.exe` path (Windows format with backslashes)
+3. **Arguments**: Paste the `server_workshop.py` path (Windows format)
+4. **Environment Variables** (optional):
+   - Key: `PYTHONPATH`
+   - Value: Your workshop path
+
+**Test Your Server:**
+- Click "Connect" to start the server
+- Browse the **Tools** tab to see all 6 available tools
+- Click any tool and fill parameters to test it
+- Check **Prompts** tab for `customer_analysis` and `pricing_analysis`
+- Inspect **Resources** tab to view available data files
+
+**Benefits:**
+- ✅ Visual interface for debugging
+- ✅ Test tools individually without Claude Desktop
+- ✅ Inspect JSON request/response data
+- ✅ Faster iteration during development
+
+> 📖 **For detailed instructions**, see Step 6-7 in [WORKSHOP_GUIDE_EN.md](WORKSHOP_GUIDE_EN.md)
+
 ### Configure with Claude Desktop
+
+**Option A: Automated Configuration (Recommended) ⚡**
+
+```powershell
+# Run the automated configuration script
+.\configure_claude.ps1
+```
+
+This script will:
+- ✅ Auto-detect all required paths
+- ✅ Backup your existing configuration
+- ✅ Create/update Claude Desktop config with correct paths and PYTHONPATH
+- ✅ Validate the JSON configuration
+- ✅ Open the config file for review
+- ✅ Show you the next steps
+
+Then restart Claude Desktop and start using your MCP tools!
+
+---
+
+**Option B: Manual Configuration**
 
 **Get your paths first:**
 ```powershell
-# Run this in your workshop directory
-$workshopPath = (Get-Location).Path
-$pythonPath = "$workshopPath\workshop-env\Scripts\python.exe" -replace '\\', '/'
-$serverPath = "$workshopPath\server_workshop.py" -replace '\\', '/'
-
-Write-Host "Python: $pythonPath"
-Write-Host "Server: $serverPath"
+# Run the configuration paths script
+.\ConfigurationPaths.ps1
 ```
+
+Copy the paths from the "FOR CLAUDE DESKTOP (JSON format)" section.
 
 **Edit your Claude Desktop configuration file:**
 
@@ -155,17 +242,18 @@ Write-Host "Server: $serverPath"
   "mcpServers": {
     "bc-workshop-server": {
       "command": "YOUR_PYTHON_PATH_HERE",
-      "args": ["YOUR_SERVER_PATH_HERE"]
+      "args": ["YOUR_SERVER_PATH_HERE"],
+      "env": {
+        "PYTHONPATH": "YOUR_WORKSHOP_PATH_HERE"
+      }
     }
   }
 }
 ```
 
-> ⚠️ **Common Issue**: If Claude Desktop shows JSON errors, make sure your paths are on **single lines** with **forward slashes** `/`. 
+> ⚠️ **Important**: Include the `"env"` field with `PYTHONPATH` to ensure proper module loading.
 > 
 > 💡 **Quick validation**: Run `Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" | ConvertFrom-Json` to test your JSON.
-> 
-> 🆘 **If stuck**: Run `.\configure_claude.ps1` for automatic configuration.
 
 Then restart Claude Desktop and start using your MCP tools!
 
@@ -188,12 +276,16 @@ You should see this structure:
 Workshop-MCP-Server-Directions-Lab/
 ├── 📄 server_workshop.py           # Main MCP server (STDIO transport)
 ├── 📄 validate_workshop.py         # Validation script
+├── 📄 test_server.py               # Quick server test (lists tools)
 ├── 📄 test_workshop_exercise.py    # Exercise tests
 ├── 📄 requirements.txt             # Python dependencies
-├── 🔒 .env.example                 # Environment template
+├── 📄 setup.ps1                    # Automated setup (Windows)
+├── 📄 setup.sh                     # Automated setup (macOS/Linux)
+├── � ConfigurationPaths.ps1       # Get paths for Claude Desktop & MCP Inspector
+├── �🔒 .env.example                 # Environment template
 ├── 📖 README.md                    # This file
+├── 📖 QUICK_START_GUIDE.md         # Quick start instructions
 ├── 📖 WORKSHOP_GUIDE_EN.md         # Complete step-by-step guide
-├── 📖 PRESENTATION_SLIDES_EN.md    # English presentation slides
 │
 ├── 📁 src/                         # Source code modules
 │   ├── azure_auth.py               # Azure AD authentication
@@ -201,6 +293,7 @@ Workshop-MCP-Server-Directions-Lab/
 │   └── config.py                   # Configuration
 │
 └── 📁 data/                        # Sample data
+    ├── README.md                   # Data files documentation
     ├── categories.csv              # Product categories
     ├── prices.csv                  # Price and stock data
     ├── substitutes.csv             # Product substitutions

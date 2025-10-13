@@ -34,10 +34,13 @@ chmod +x setup.sh
 ```
 
 The script will automatically:
-- ✅ Check Python 3.12+ compatibility
-- ✅ Create virtual environment
-- ✅ Install dependencies (`mcp`, `httpx`, `msal`)
-- ✅ Verify setup with `validate_workshop.py`
+- [OK] Auto-detect Python installation (no PATH configuration needed)
+- [OK] Check Python 3.12+ compatibility
+- [OK] Create virtual environment
+- [OK] Install dependencies (`mcp`, `fastmcp`, `httpx`, `pydantic`)
+- [OK] Verify setup with `validate_workshop.py`
+
+**Note**: The setup script automatically finds Python in common installation locations. You don't need Python in your system PATH.
 
 ### Step 3: Configure Environment (Optional - for Business Central)
 
@@ -68,18 +71,146 @@ source workshop-env/bin/activate  # macOS/Linux
 python validate_workshop.py
 ```
 
-**Expected output**: ✅ All checks should pass
+**Expected output**: All checks should pass (6/6)
+
+```
+[PASS] Python Version
+[PASS] Dependencies  
+[PASS] Files
+[PASS] Configuration
+[PASS] Data Files
+[PASS] Server Import
+
+[STATS] RESULT: 6/6 checks passed
+[SUCCESS] WORKSHOP READY! You can run: python server_workshop.py
+```
 
 ### Step 5: Test the MCP Server
 
+**Quick test** (lists available tools):
+
 ```bash
-# Run the server directly (test mode)
+python test_server.py
+```
+
+**Expected output**:
+```
+============================================================
+AVAILABLE TOOLS:
+============================================================
+
+1. get_customers
+   Description: Get customer list from Business Central
+
+2. get_items
+   Description: Get items list from Business Central
+
+3. get_sales_orders
+   Description: Get sales orders from Business Central
+
+[INFO] Total tools available: 6
+[SUCCESS] Test completed successfully!
+```
+
+**Alternative**: Run the server directly (waits for STDIO communication):
+
+```bash
 python server_workshop.py
 ```
 
-**Expected**: Server starts and waits for stdin/stdout communication
+**Note**: The server uses STDIO transport and will wait for JSON-RPC messages. Use `test_server.py` for a quick validation, or configure Claude Desktop for real usage.
 
-### Step 6: Configure Claude Desktop
+### Step 6: Get Configuration Paths
+
+Before configuring any tool, get your paths in the correct format:
+
+```powershell
+# Run the configuration paths script
+.\ConfigurationPaths.ps1
+```
+
+**What this script does:**
+- Detects your workshop directory automatically
+- Displays Python executable path
+- Shows server script path
+- Outputs **two formats**:
+  - **FOR CLAUDE DESKTOP**: JSON format with forward slashes (`/`)
+  - **FOR MCP INSPECTOR**: Windows format with backslashes (`\`)
+
+**Example output:**
+```
+============================================================
+ FOR CLAUDE DESKTOP (JSON format)
+============================================================
+Command:    C:/Users/.../workshop-env/Scripts/python.exe
+Args:       C:/Users/.../server_workshop.py
+PYTHONPATH: C:/Users/.../Workshop-MCP-Server-Directions-Lab
+
+============================================================
+ FOR MCP INSPECTOR (Windows format)
+============================================================
+Transport Type: STDIO
+Command:        C:\Users\...\workshop-env\Scripts\python.exe
+Arguments:      C:\Users\...\server_workshop.py
+Env (optional): PYTHONPATH=C:\Users\...\Workshop-MCP-Server-Directions-Lab
+```
+
+> 💡 **Tip**: Keep this terminal window open while configuring tools, or run the script again anytime you need the paths.
+
+### Step 7: Test with MCP Inspector (Optional)
+
+**MCP Inspector** provides a visual interface to test your MCP server before configuring Claude Desktop.
+
+#### Install MCP Inspector
+
+```bash
+# Quick start (no installation)
+npx @modelcontextprotocol/inspector
+
+# Or install globally
+npm install -g @modelcontextprotocol/inspector
+mcp-inspector
+```
+
+#### Configure MCP Inspector
+
+MCP Inspector will open a web interface. Configure it with:
+
+1. **Transport Type**: `STDIO`
+2. **Command**: Your `python.exe` path from Step 6 (Windows format with `\`)
+   ```
+   C:\Users\...\Workshop-MCP-Server-Directions-Lab\workshop-env\Scripts\python.exe
+   ```
+3. **Arguments**: Your `server_workshop.py` path from Step 6 (Windows format)
+   ```
+   C:\Users\...\Workshop-MCP-Server-Directions-Lab\server_workshop.py
+   ```
+4. **Environment Variables** (optional but recommended):
+   - Key: `PYTHONPATH`
+   - Value: Your workshop path from Step 6
+
+#### Test Your Server
+
+1. Click **"Connect"** to start the server
+2. Browse the **Tools** tab:
+   - You should see 6 tools: `get_customers`, `get_items`, `get_sales_orders`, etc.
+   - Click any tool to see its parameters
+   - Fill in parameters and click "Execute" to test
+3. Check the **Prompts** tab:
+   - `customer_analysis` - Analyzes customer data
+   - `pricing_analysis` - Analyzes pricing and stock
+4. Inspect the **Resources** tab:
+   - View available data files (CSV and JSON)
+
+**Benefits of MCP Inspector:**
+- ✅ Visual debugging interface
+- ✅ Test tools easily without CLI
+- ✅ Inspect input/output data structures
+- ✅ Faster iteration during development
+
+> 💡 **Tip**: Use MCP Inspector during development to test your tools before integrating with Claude Desktop
+
+### Step 8: Configure Claude Desktop
 
 **Location of config file:**
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
@@ -98,7 +229,7 @@ python server_workshop.py
 }
 ```
 
-### Step 7: Test in Claude Desktop
+### Step 9: Test in Claude Desktop
 
 1. **Restart Claude Desktop**
 2. **Verify tools are available**:
@@ -114,7 +245,7 @@ python server_workshop.py
 
 ---
 
-## 💡 Step 8: Practical Exercises
+## 💡 Step 10: Practical Exercises
 
 Welcome to the hands-on section! You'll learn by doing:
 - **Part A (Exercises 1-2)**: Test existing MCP tools with **Business Central Standard APIs**
@@ -140,7 +271,7 @@ Welcome to the hands-on section! You'll learn by doing:
 
 **Step-by-step testing**:
 
-1. **Open Claude Desktop** (ensure your MCP server is configured from Step 8)
+1. **Open Claude Desktop** (ensure your MCP server is configured from Step 10)
 
 2. **Test get_customers tool with real BC API**:
  ```

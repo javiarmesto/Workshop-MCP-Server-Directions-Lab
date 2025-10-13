@@ -7,7 +7,7 @@
 3. [Understanding STDIO Transport](#-understanding-stdio-transport)
 4. [Key Files Explained](#-key-files-explained)
 5. [Step-by-Step Instructions](#-step-by-step-instructions)
-6. [Practical Exercises](#-step-9-practical-exercises)
+6. [Practical Exercises](#-step-10-practical-exercises)
 7. [Troubleshooting](#-troubleshooting)
 
 ---
@@ -502,13 +502,16 @@ chmod +x setup.sh
 ```
 
 The automated scripts will handle everything automatically:
+- **Auto-detect Python installations** (searches PATH, %LOCALAPPDATA%, C:\Python31X, Program Files)
 - Check Python version compatibility (3.12+)
 - Create and activate virtual environment properly
 - Install all required dependencies
-- Verify installation works correctly
+- Verify installation works correctly (6/6 checks)
 - Show you the next steps
 
-**If automated setup succeeds, skip to [Step 6: Run the Workshop Server](#step-6-run-the-workshop-server).**
+> **Note**: The Windows script (`setup.ps1`) includes automatic Python detection, so you don't need to add Python to your PATH or worry about finding the correct Python installation location.
+
+**If automated setup succeeds, skip to [Step 8: Run the Workshop Server](#step-8-run-the-workshop-server).**
 
 ### Option B: Manual Setup (Step by Step) 🔧 
 
@@ -529,6 +532,9 @@ cd Workshop-MCP-Server-Directions-Lab-main
 ```
 Workshop-MCP-Server-Directions-Lab/
  server_workshop.py Main server file
+ validate_workshop.py Setup validator
+ test_server.py Quick server test
+ setup.ps1 Automated setup (Windows)
  .env.example Configuration template
  requirements.txt Python dependencies
  src/ Source code modules
@@ -542,12 +548,15 @@ Workshop-MCP-Server-Directions-Lab/
  sales_orders.csv
  payment_terms.csv
  price-analysis.json
+ README.md Data documentation
  archive/ Archived files (HTTP version, old tests)
 ```
 
 ---
 
 ### Step 2: Install Python and Dependencies
+
+> **Note**: If you're using the automated `setup.ps1` script (see [Option 1: Automated Setup Script](#option-1-automated-setup-script-windows)), it will automatically detect Python installations in common locations (`PATH`, `%LOCALAPPDATA%\Programs\Python`, `C:\Python31X`, `Program Files`), so you don't need to manually configure PATH or worry about Python detection.
 
 #### 2.1 Check Python Version
 
@@ -753,46 +762,64 @@ Run the validation script to ensure everything is configured correctly:
 ============================================================
  Python Verification
 ============================================================
- Python 3.13.7 - Compatible
+[OK] Python 3.14.0 - Compatible
 
 ============================================================
  Dependencies Verification
 ============================================================
- mcp
- fastmcp
-[... more dependencies ...]
+[OK] mcp
+[OK] fastmcp
+[OK] httpx
+[OK] anyio
+[OK] pydantic
+[OK] python-dotenv
 
- All dependencies are installed
+[OK] All dependencies are installed
 
 ============================================================
  Files Verification
 ============================================================
- server_workshop.py
- requirements.txt
-[... more files ...]
+[OK] server_workshop.py
+[OK] requirements.txt
+[OK] .env
+[OK] data/prices.csv
+[OK] data/categories.csv
+[OK] data/sales_orders.csv
 
- All files are present
+[OK] All files are present
 
 ============================================================
  Configuration Verification
 ============================================================
- .env file found
- Complete configuration
+[OK] .env file found
+[OK] Complete configuration
+
+============================================================
+ Data Files Verification
+============================================================
+[OK] prices.csv: 100 records
+[OK] categories.csv: 50 records
+[OK] sales_orders.csv: 200 records
+
+============================================================
+ Server Import Verification
+============================================================
+[OK] Server module imports successfully
 
 ============================================================
  VALIDATION SUMMARY
 ============================================================
- PASS Python Version
- PASS Dependencies
- PASS Files
- PASS Configuration
- PASS Data Files
- PASS Server Import
+[PASS] Python Version
+[PASS] Dependencies
+[PASS] Files
+[PASS] Configuration
+[PASS] Data Files
+[PASS] Server Import
 
- RESULT: 6/6 checks passed
+[OK] RESULT: 6/6 checks passed
 
- WORKSHOP READY! You can run:
- .\workshop-env\Scripts\python.exe server_workshop.py
+[OK] WORKSHOP READY! You can run:
+     .\workshop-env\Scripts\python.exe server_workshop.py
 ```
 
 ![Successful Validation Output](images/validation-success.png)
@@ -806,7 +833,192 @@ Run the validation script to ensure everything is configured correctly:
 
 ---
 
-### Step 6: Run the Workshop Server
+### Step 5.5: Quick Server Test (Optional)
+
+Before configuring Claude Desktop, you can quickly test that the server is working and see available tools:
+
+```bash
+.\workshop-env\Scripts\python.exe test_server.py
+```
+
+**Expected output**:
+```
+============================================================
+ MCP SERVER QUICK TEST
+============================================================
+
+[INFO] Starting server: .\workshop-env\Scripts\python.exe server_workshop.py
+[INFO] Server started (PID: 12345)
+[INFO] Sending initialization request...
+[OK] Server initialized successfully
+
+============================================================
+ AVAILABLE MCP TOOLS (6)
+============================================================
+
+1. get_customers
+   Description: Get customer list from Business Central
+   Parameters: top (optional), filter (optional)
+
+2. get_items
+   Description: Get item/product catalog
+   Parameters: top (optional), filter (optional)
+
+3. get_sales_orders
+   Description: Get sales order history
+   Parameters: top (optional), customer_id (optional)
+
+4. get_customer_details
+   Description: Get detailed customer information
+   Parameters: customer_id (required)
+
+5. get_item_details
+   Description: Get detailed item information
+   Parameters: item_id (required)
+
+6. get_currency_exchange_rates
+   Description: Get currency exchange rates
+   Parameters: base_currency (optional)
+
+============================================================
+
+[OK] Server test completed successfully
+[INFO] Server stopped
+```
+
+This confirms:
+- ✅ Server starts without errors
+- ✅ MCP protocol communication works
+- ✅ All 6 tools are available
+- ✅ Ready for Claude Desktop integration
+
+---
+
+### Step 6: Get Configuration Paths
+
+Before configuring Claude Desktop or MCP Inspector, run the configuration paths script:
+
+```powershell
+# Run the configuration paths script
+.\ConfigurationPaths.ps1
+```
+
+**This script will display:**
+- Your workshop directory path
+- Python executable location
+- Server script location
+- **FOR CLAUDE DESKTOP**: JSON format with forward slashes (`/`)
+- **FOR MCP INSPECTOR**: Windows format with backslashes (`\`)
+
+**Example output:**
+```
+============================================================
+ CONFIGURATION PATHS
+============================================================
+
+Workshop Path:
+  C:\Users\YourName\Documents\Workshop-MCP-Server-Directions-Lab
+
+Python Executable:
+  C:\Users\YourName\Documents\...\workshop-env\Scripts\python.exe
+
+Server Script:
+  C:\Users\YourName\Documents\...\server_workshop.py
+
+============================================================
+ FOR CLAUDE DESKTOP (JSON format)
+============================================================
+Command:    C:/Users/YourName/Documents/.../python.exe
+Args:       C:/Users/YourName/Documents/.../server_workshop.py
+PYTHONPATH: C:/Users/YourName/Documents/Workshop-MCP-Server-Directions-Lab
+
+============================================================
+ FOR MCP INSPECTOR (Windows format)
+============================================================
+Transport Type: STDIO
+Command:        C:\Users\YourName\Documents\...\python.exe
+Arguments:      C:\Users\YourName\Documents\...\server_workshop.py
+Env (optional): PYTHONPATH=C:\Users\YourName\Documents\...
+```
+
+> 💡 **Tip**: Keep this terminal window open, or run `.\ConfigurationPaths.ps1` again anytime you need the paths.
+
+---
+
+### Step 7: Test with MCP Inspector (Optional)
+
+**MCP Inspector** is a visual tool for testing MCP servers without Claude Desktop. It's perfect for debugging and development.
+
+#### 7.1 Install MCP Inspector
+
+```bash
+npx @modelcontextprotocol/inspector
+```
+
+Or install globally:
+```bash
+npm install -g @modelcontextprotocol/inspector
+mcp-inspector
+```
+
+#### 7.2 Configure MCP Inspector
+
+When MCP Inspector opens in your browser:
+
+1. **Transport Type**: Select `STDIO`
+
+2. **Command**: Use the Python executable path from Step 6:
+   ```
+   C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe
+   ```
+   (or use the path shown in your Step 6 output)
+
+3. **Arguments**: Use the server script path from Step 6:
+   ```
+   C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py
+   ```
+   (or use the path shown in your Step 6 output)
+
+4. **Environment Variables** (Optional but recommended):
+   ```
+   PYTHONPATH=C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab
+   ```
+
+5. Click **Connect**
+
+#### 7.3 Test with MCP Inspector
+
+Once connected, you should see:
+
+**Tools Tab:**
+- ✅ 6 tools listed (get_customers, get_items, etc.)
+- Click any tool to see its parameters
+- Click "Execute" to test it
+
+**Prompts Tab:**
+- View available prompts (customer_analysis, sales_analysis, etc.)
+
+**Resources Tab:**
+- View static resources (prices.csv, categories.csv, etc.)
+
+**Benefits of MCP Inspector:**
+- 🔍 **Visual debugging** - See requests/responses in real-time
+- 🧪 **Test tools easily** - No need to type prompts
+- 📊 **Inspect data** - View JSON responses formatted
+- ⚡ **Faster iteration** - Test changes without restarting Claude Desktop
+
+**Example Test:**
+1. Go to "Tools" tab
+2. Find "get_customers"
+3. Set parameter: `top: 5`
+4. Click "Execute"
+5. See the response with customer data
+
+> **Tip**: Use MCP Inspector during development to test your tools before configuring Claude Desktop!
+
+---
+
+### Step 8: Run the Workshop Server
 
 #### 6.1 Start the Server (For Testing)
 
@@ -820,14 +1032,14 @@ Run the validation script to ensure everything is configured correctly:
 
 **Expected output (STDIO Server)**:
 ```
-2025-10-11 10:11:03,178 INFO __main__: Starting MCP Workshop Server with STDIO transport
-2025-10-11 10:11:03,178 INFO __main__: Ready for Claude Desktop connection
+2025-10-11 10:11:03,178 INFO __main__: [START] MCP Workshop Server with STDIO transport
+2025-10-11 10:11:03,178 INFO __main__: [READY] Ready for Claude Desktop connection
 [Server waits for STDIO input/output from Claude Desktop]
 ```
 
 **Note**: The server will appear to "hang" - this is normal! It's waiting for JSON-RPC messages from Claude Desktop via stdin/stdout. Press `Ctrl+C` to stop.
 
-**For actual usage**, configure this server in Claude Desktop (see [Step 8: Configure Claude Desktop Integration](#step-8-configure-claude-desktop-integration)).
+**For actual usage**, configure this server in Claude Desktop (see [Step 9: Configure Claude Desktop Integration](#step-9-configure-claude-desktop-integration)).
 
 **Server is now running!** Keep this terminal open.
 
@@ -874,130 +1086,13 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVe
 **Method 3: Check Server Logs**
 In the terminal where the server is running, you should see:
 ```
-INFO __main__: Starting MCP Workshop Server with STDIO transport
-INFO __main__: Ready for Claude Desktop connection
+INFO __main__: [START] MCP Workshop Server with STDIO transport
+INFO __main__: [READY] Ready for Claude Desktop connection
 ```
 
 ---
 
-### Step 7: Testing with Claude Desktop
-
-**Important**: This server is designed for Claude Desktop integration using STDIO transport. For testing MCP functionalities, we'll use our test scripts and then configure Claude Desktop.
-
-#### 7.1 Test MCP Tools with Script
-
-Let's test the available tools using our comprehensive test script:
-
-```powershell
-# Create a simple tool test
-.\workshop-env\Scripts\python.exe -c "
-import json
-import subprocess
-import sys
-import os
-
-# Test message for listing tools
-list_tools_msg = {
- 'jsonrpc': '2.0', 
- 'id': 1, 
- 'method': 'tools/list', 
- 'params': {}
-}
-
-# Start server process
-process = subprocess.Popen(
- [os.path.join('workshop-env', 'Scripts', 'python.exe'), 'server_workshop.py'],
- stdin=subprocess.PIPE,
- stdout=subprocess.PIPE,
- stderr=subprocess.PIPE,
- text=True
-)
-
-# Send initialize first
-init_msg = {
- 'jsonrpc': '2.0',
- 'id': 0,
- 'method': 'initialize',
- 'params': {
- 'protocolVersion': '2024-11-05',
- 'capabilities': {},
- 'clientInfo': {'name': 'test', 'version': '1.0'}
- }
-}
-
-try:
- # Send messages
- input_data = json.dumps(init_msg) + '\n' + json.dumps(list_tools_msg) + '\n'
- stdout, stderr = process.communicate(input=input_data, timeout=10)
- 
- print(' Available Tools:')
- lines = stdout.strip().split('\n')
- for line in lines:
- if line.strip():
- try:
- response = json.loads(line)
- if 'result' in response and 'tools' in response.get('result', {}):
- for tool in response['result']['tools']:
- print(f' {tool[\"name\"]}: {tool[\"description\"]}')
- except: pass
- 
-except Exception as e:
- print(f'Error: {e}')
-finally:
- try: process.kill()
- except: pass
-"
-```
-
-**Expected tools available:**
-- 🏢 `get_customers` - Get customer list from Business Central
-- 📦 `get_items` - Get items/products from Business Central 
-- 🛒 `get_sales_orders` - Get sales orders from Business Central
-- 🔍 `get_customer_details` - Get detailed customer information
-- 🔍 `get_item_details` - Get detailed item information
-- 💱 `get_currency_exchange_rates` - Get currency exchange rates
-
-#### 7.2 Configure Claude Desktop
-
-To use this server with Claude Desktop, you need to configure it in Claude's settings:
-
-**Step 1: Find Claude Desktop Config File**
-
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json` 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-![Claude Desktop Config File Location](images/claude-desktop-config.png)
-*Screenshot showing the location and structure of the Claude Desktop configuration file*
-
-**Step 2: Add MCP Server Configuration**
-
-Edit the config file to add your server:
-
-```json
-{
- "mcpServers": {
- "bc-workshop-server": {
- "command": "C:/Users/YOUR_USERNAME/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
- "args": ["C:/Users/YOUR_USERNAME/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py"]
- }
- }
-}
-```
-
-**Important**: Replace `YOUR_USERNAME` with your actual Windows username.
-
-**Step 3: Restart Claude Desktop**
-
-Close and reopen Claude Desktop for the changes to take effect.
-
-**Step 4: Verify Connection**
-
-In Claude Desktop, you should be able to ask:
-- "What MCP tools are available?"
-- "Show me the Business Central customers"
-- "Get some items from the catalog"
-
-#### 7.3 Test Individual MCP Functions
+#### 7: Test Individual MCP Functions
 
 Now let's test calling specific MCP tools:
 
@@ -1044,19 +1139,19 @@ asyncio.run(test_get_customers())
 **Expected output:**
 
 ```text
-🏢 **Business Central Customers** (Showing 5 results)
+Business Central Customers (Showing 5 results)
 
-• **Adatum Corporation** (ID: xxx)
-  📍 Atlanta
-  📞 555-0123
+* Adatum Corporation (ID: xxx)
+  Location: Atlanta
+  Phone: 555-0123
 
-• **Trey Research** (ID: xxx)
-  📍 New York
-  📞 555-0456
+• Trey Research (ID: xxx)
+  Location: New York
+  Phone: 555-0456
 
-• **School of Fine Art** (ID: xxx)
-  📍 Miami
-  📞 555-0789
+• School of Fine Art (ID: xxx)
+  Location: Miami
+  Phone: 555-0789
 
 [... more customers ...]
 ```
@@ -1157,11 +1252,13 @@ asyncio.run(test_currency_rates())
 
 ---
 
-### Step 8: Configure Claude Desktop Integration
 
-Now let's configure Claude Desktop to use our MCP server for real-world testing.
 
-#### 8.1 Locate Claude Configuration File
+### Step 9: Configure Claude Desktop Integration
+
+Now let's configure Claude Desktop to use our MCP server for real-world AI assistant integration.
+
+#### 9.1 Locate Claude Configuration File
 
 **Windows**:
 ```
@@ -1182,11 +1279,37 @@ Get-ChildItem "$env:APPDATA\Claude\" -Filter "claude_desktop_config.json" -Error
 New-Item -ItemType Directory -Force -Path "$env:APPDATA\Claude"
 ```
 
-#### 8.2 Create/Edit MCP Server Configuration
+#### 9.2 Create/Edit MCP Server Configuration
+
+**Option A: Automated Configuration (Recommended) ⚡**
+
+Run the automated configuration script:
+
+```powershell
+.\configure_claude.ps1
+```
+
+This script will:
+- Auto-detect all required paths (same as Step 6)
+- Backup your existing configuration
+- Create/update the Claude Desktop config with correct paths and PYTHONPATH
+- Validate the JSON configuration
+- Open the config file for review
+- Show you the next steps
+
+> **Note**: This script does the same path detection as Step 6, so you don't need to run Step 6 manually if you use this script.
+
+**If the automated script succeeds, skip to [Step 9.3: Restart Claude Desktop](#step-93-restart-claude-desktop).**
+
+---
+
+**Option B: Manual Configuration**
+
+If you prefer manual control:
 
 **Step 1: Get Your Exact Paths**
 
-First, let's find your paths. Run these commands in PowerShell:
+Run these commands in PowerShell:
 
 ```powershell
 # Get your workshop directory
@@ -1212,16 +1335,9 @@ notepad "$env:APPDATA\Claude\claude_desktop_config.json"
 New-Item -ItemType Directory -Force -Path "$env:APPDATA\Claude"
 ```
 
-**Step 3: Create the Configuration**
+**Step 3: Edit the Configuration File**
 
-Copy this template and **replace the paths** with the ones you got from Step 1:
-
-# Get server script path
-$serverPath = "$workshopPath\server_workshop.py"
-Write-Host "Server Path: $serverPath"
-```
-
-**Create or edit the Claude configuration file:**
+Paste this template and **replace the paths** with the ones you got from Step 1:
 
 ```json
 {
@@ -1262,14 +1378,14 @@ During our testing, we discovered that even with the virtual environment activat
 }
 ```
 
-#### 8.3 Restart Claude Desktop
+#### 9.3 Restart Claude Desktop
 
 1. **Quit Claude Desktop completely** (not just minimize)
 2. **Restart Claude Desktop**
 3. **Look for the MCP indicator** - You should see a tool/plugin icon
 4. **Check for errors** in Claude's developer console if needed
 
-#### 8.4 Test MCP Integration in Claude Desktop
+#### 9.4 Test MCP Integration in Claude Desktop
 
 Try these prompts in Claude Desktop:
 
@@ -1290,79 +1406,9 @@ Claude should be able to:
 - Show item catalog with prices and stock
 - Display currency exchange rates
 
-**Visual verification:**
 
-![MCP Tools List in Claude Desktop](images/claude-mcp-tools-list.png)
-*Screenshot showing the expected MCP tools display in Claude Desktop*
 
-When you ask Claude "Show me available tools", you should see all 6 Business Central tools listed with their descriptions.
-
-#### 8.5 Verify MCP Connection
-
-If Claude Desktop connects successfully, you should see:
-
-**In Claude's interface:**
-- Tool/plugin icon indicating MCP connection
-- Ability to call Business Central functions
-- Real data responses from your queries
-
-**In your terminal (if server is running):**
-```
-INFO __main__: Starting MCP Workshop Server with STDIO transport
-INFO __main__: Ready for Claude Desktop connection
-INFO server_workshop: Calling tool: get_customers with arguments: {'top': 5}
-INFO httpx: HTTP Request: POST https://login.microsoftonline.com/...
-```
-
-#### 8.6 Troubleshooting Claude Desktop Configuration
-
-**Problem: "Could not load application settings" or "Unexpected token" JSON error**
-
-This is the most common issue when configuring Claude Desktop. It happens when the JSON file has syntax errors, often caused by:
-- Line breaks within string values
-- Missing commas or brackets
-- Incorrect escape characters
-
-**Solution: Validate and Fix Your JSON**
-
-```powershell
-# Test if the JSON is valid
-Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" | ConvertFrom-Json
-
-# If you see errors, the JSON is malformed
-# If no errors, the JSON is valid
-```
-
-**Common mistakes:**
-```json
-// WRONG - Line break in the middle of a string
-{
- "command": "C:/Users/MyName/Documents/Workshop
-/python.exe"
-}
-
-// CORRECT - String on single line
-{
- "command": "C:/Users/MyName/Documents/Workshop/python.exe"
-}
-```
-
-**Checklist before saving:**
-- All paths use forward slashes `/` (not backslashes `\`)
-- No line breaks within string values
-- All brackets and braces match `{ }` and `[ ]`
-- Commas after each property (except the last one)
-
-**After fixing:**
-1. Save the file
-2. Close Claude Desktop completely (check system tray)
-3. Restart Claude Desktop
-
-> **Quick Fix**: If you're stuck, use the automatic script: `.\configure_claude.ps1`
-
----
-
-## 💡 Step 9: Practical Exercises
+## 💡 Step 10: Practical Exercises
 
 Welcome to the hands-on section! You'll learn by doing:
 - **Part A (Exercises 1-2)**: Test existing MCP tools with **Business Central Standard APIs**
@@ -1388,7 +1434,7 @@ Welcome to the hands-on section! You'll learn by doing:
 
 **Step-by-step testing**:
 
-1. **Open Claude Desktop** (ensure your MCP server is configured from Step 8)
+1. **Open Claude Desktop** (ensure your MCP server is configured from Step 9)
 
 2. **Test get_customers tool with real BC API**:
  ```
@@ -1398,11 +1444,11 @@ Welcome to the hands-on section! You'll learn by doing:
  **Expected result**: Claude calls Business Central API and shows:
 
  ```text
- 🏢 **Business Central Customers** (Showing X results)
+ Business Central Customers (Showing X results)
  
- • **Customer Name** (ID: xxx)
-   📍 City
-   📞 Phone Number
+ • Customer Name (ID: xxx)
+   Location: City
+   Phone: Phone Number
  ```
 
 3. **Test customer_analysis prompt with BC data**:

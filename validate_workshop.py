@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🧪 MCP WORKSHOP VALIDATION SCRIPT
+MCP WORKSHOP VALIDATION SCRIPT
 =========================================
 
 This script verifies that the workshop is configured correctly
@@ -19,7 +19,7 @@ from pathlib import Path
 def print_header(title: str):
     """Print section header"""
     print(f"\n{'='*60}")
-    print(f"🔍 {title}")
+    print(f"[CHECK] {title}")
     print(f"{'='*60}")
 
 def check_python_version():
@@ -28,10 +28,10 @@ def check_python_version():
     
     version = sys.version_info
     if version >= (3, 12):
-        print(f"✅ Python {version.major}.{version.minor}.{version.micro} - Compatible")
+        print(f"[OK] Python {version.major}.{version.minor}.{version.micro} - Compatible")
         return True
     else:
-        print(f"❌ Python {version.major}.{version.minor}.{version.micro} - Requires Python 3.12+")
+        print(f"[ERROR] Python {version.major}.{version.minor}.{version.micro} - Requires Python 3.12+")
         return False
 
 def check_dependencies():
@@ -61,17 +61,17 @@ def check_dependencies():
                 importlib.import_module('dotenv')
             else:
                 importlib.import_module(package)
-            print(f"✅ {package}")
+            print(f"[OK] {package}")
         except ImportError:
-            print(f"❌ {package} - NOT INSTALLED")
+            print(f"[ERROR] {package} - NOT INSTALLED")
             missing.append(package)
     
     if missing:
-        print(f"\n⚠️  Missing dependencies: {', '.join(missing)}")
+        print(f"\n[WARN] Missing dependencies: {', '.join(missing)}")
         print("   Run: pip install -r requirements.txt")
         return False
     else:
-        print(f"\n✅ All dependencies are installed")
+        print(f"\n[OK] All dependencies are installed")
         return True
 
 def check_files():
@@ -81,7 +81,7 @@ def check_files():
     required_files = [
         'server_workshop.py',
         'requirements.txt',
-        'README.md',
+        'REaDME.md',
         '.env.example',
         'src/client.py',
         'src/config.py',
@@ -94,7 +94,6 @@ def check_files():
     ]
     
     data_files = [
-        'data/README.md',
         'data/prices.csv',
         'data/categories.csv',
         'data/substitutes.csv',
@@ -106,32 +105,32 @@ def check_files():
     # Verify main files
     for file in required_files:
         if os.path.exists(file):
-            print(f"✅ {file}")
+            print(f"[OK] {file}")
         else:
-            print(f"❌ {file} - NOT FOUND")
+            print(f"[ERROR] {file} - NOT FOUND")
             missing.append(file)
     
     # Verify directories
     for dir in required_dirs:
         if os.path.isdir(dir):
-            print(f"✅ {dir}/")
+            print(f"[OK] {dir}/")
         else:
-            print(f"❌ {dir}/ - NOT FOUND")
+            print(f"[ERROR] {dir}/ - NOT FOUND")
             missing.append(dir)
     
     # Verify data files
     for file in data_files:
         if os.path.exists(file):
-            print(f"✅ {file}")
+            print(f"[OK] {file}")
         else:
-            print(f"❌ {file} - NOT FOUND")
+            print(f"[ERROR] {file} - NOT FOUND")
             missing.append(file)
     
     if missing:
-        print(f"\n⚠️  Missing files: {', '.join(missing)}")
+        print(f"\n[WARN] Missing files: {', '.join(missing)}")
         return False
     else:
-        print(f"\n✅ All files are present")
+        print(f"\n[OK] All files are present")
         return True
 
 def check_configuration():
@@ -140,7 +139,7 @@ def check_configuration():
     
     # Verify if .env exists
     if os.path.exists('.env'):
-        print("✅ .env file found")
+        print("[OK] .env file found")
         
         # Load environment variables if dotenv is available
         try:
@@ -160,29 +159,29 @@ def check_configuration():
             
             for var in required_vars:
                 if os.getenv(var):
-                    print(f"✅ {var} configured")
+                    print(f"[OK] {var} configured")
                     configured_vars.append(var)
                 else:
-                    print(f"⚠️  {var} not configured")
+                    print(f"[WARN] {var} not configured")
                     missing_vars.append(var)
             
             if missing_vars:
-                print(f"\n⚠️  Unconfigured variables: {', '.join(missing_vars)}")
+                print(f"\n[WARN] Unconfigured variables: {', '.join(missing_vars)}")
                 print("   Server will run with mock data if BC credentials are missing")
                 return True  # Not critical for workshop
             else:
-                print(f"\n✅ Complete configuration")
+                print(f"\n[OK] Complete configuration")
                 return True
                 
         except ImportError:
-            print("⚠️  python-dotenv not available - cannot verify configuration")
+            print("[WARN] python-dotenv not available - cannot verify configuration")
             return True
     
     else:
-        print("⚠️  .env file not found")
+        print("[WARN] .env file not found")
         print("   Copy .env.example to .env and configure the variables")
         if os.path.exists('.env.example'):
-            print("✅ .env.example available as template")
+            print("[OK] .env.example available as template")
         return True  # Not critical for basic testing
 
 def test_data_files():
@@ -200,23 +199,23 @@ def test_data_files():
                 with open(csv_file, 'r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
                     rows = list(reader)
-                    print(f"✅ {csv_file} - {len(rows)} records")
+                    print(f"[OK] {csv_file} - {len(rows)} records")
             else:
-                print(f"❌ {csv_file} - Not found")
+                print(f"[ERROR] {csv_file} - Not found")
         
         # Test JSON file  
         json_file = 'data/price-analysis.json'
         if os.path.exists(json_file):
             with open(json_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                print(f"✅ {json_file} - Valid")
+                print(f"[OK] {json_file} - Valid")
         else:
-            print(f"❌ {json_file} - Not found")
+            print(f"[ERROR] {json_file} - Not found")
         
         return True
         
     except Exception as e:
-        print(f"❌ Error reading data files: {e}")
+        print(f"[ERROR] Error reading data files: {e}")
         return False
 
 def test_server_import():
@@ -235,32 +234,32 @@ def test_server_import():
         sys.path.insert(0, '.')
         
         import server_workshop
-        print("✅ server_workshop.py - Import successful")
+        print("[OK] server_workshop.py - Import successful")
         
         # Verify that main functions exist (STDIO version)
         if hasattr(server_workshop, 'main'):
-            print("✅ main() function available")
+            print("[OK] main() function available")
         
         if hasattr(server_workshop, 'mcp_server'):
-            print("✅ MCP server (STDIO) instantiated")
+            print("[OK] MCP server (STDIO) instantiated")
         
         if hasattr(server_workshop, 'handle_list_tools'):
-            print("✅ Tool handlers available")
+            print("[OK] Tool handlers available")
         
         return True
         
     except Exception as e:
-        print(f"❌ Error importing server: {e}")
+        print(f"[ERROR] Error importing server: {e}")
         return False
 
 def main():
     """Main validation function"""
-    print("🚀 MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)")
+    print("[START] MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)")
     print("=" * 60)
     
     # Change to workshop directory if we're in the parent directory
     if os.path.exists('workshop') and not os.path.exists('server_workshop.py'):
-        print("📁 Changing to workshop directory...")
+        print("[INFO] Changing to workshop directory...")
         os.chdir('workshop')
     
     results = []
@@ -280,17 +279,17 @@ def main():
     passed_checks = sum(1 for _, passed in results if passed)
     
     for check_name, passed in results:
-        status = "✅ PASS" if passed else "❌ FAIL"
+        status = "[PASS]" if passed else "[FAIL]"
         print(f"{status} {check_name}")
     
-    print(f"\n📊 RESULT: {passed_checks}/{total_checks} checks passed")
+    print(f"\n[STATS] RESULT: {passed_checks}/{total_checks} checks passed")
     
     if passed_checks == total_checks:
-        print("\n🎉 WORKSHOP READY! You can run:")
+        print("\n[SUCCESS] WORKSHOP READY! You can run:")
         print("   python server_workshop.py")
         return True
     else:
-        print(f"\n⚠️  {total_checks - passed_checks} checks failed.")
+        print(f"\n[WARN] {total_checks - passed_checks} checks failed.")
         print("   Review the errors above and fix before continuing.")
         return False
 

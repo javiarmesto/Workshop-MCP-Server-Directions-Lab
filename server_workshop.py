@@ -390,8 +390,8 @@ async def handle_read_resource(uri: AnyUrl) -> str:
 
 async def main():
     """Run the MCP server using STDIO transport"""
-    logger.info("🌟 Starting MCP Workshop Server with STDIO transport")
-    logger.info("📡 Ready for Claude Desktop connection")
+    logger.info("[START] Starting MCP Workshop Server with STDIO transport")
+    logger.info("[READY] Ready for Claude Desktop connection")
     
     # Run the server with STDIO transport
     async with stdio_server() as (read_stream, write_stream):
@@ -405,8 +405,8 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        logger.info("🛑 Server stopped by user")
+        logger.info("[STOP] Server stopped by user")
     except Exception as e:
-        logger.error(f"❌ Server error: {e}", exc_info=True)
+        logger.error(f"[ERROR] Server error: {e}", exc_info=True)
         sys.exit(1)
 

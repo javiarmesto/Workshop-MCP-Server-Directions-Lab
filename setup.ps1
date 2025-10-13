@@ -1,4 +1,4 @@
-# 🚀 Workshop MCP Server - Automated Setup Script
+# Workshop MCP Server - Automated Setup Script
 # =================================================
 # This script automates the complete setup process for the Workshop MCP Server
 # Run this script from the workshop directory in PowerShell
@@ -8,17 +8,19 @@ param(
     [switch]$Help    # Show help information
 )
 
-# Color functions for better output
-function Write-Success { param($Message) Write-Host "✅ $Message" -ForegroundColor Green }
-function Write-Info { param($Message) Write-Host "ℹ️  $Message" -ForegroundColor Cyan }
-function Write-Warning { param($Message) Write-Host "⚠️  $Message" -ForegroundColor Yellow }
-function Write-Error { param($Message) Write-Host "❌ $Message" -ForegroundColor Red }
-function Write-Step { param($Message) Write-Host "🔧 $Message" -ForegroundColor Blue }
+# Color functions for better output (with global scope)
+function global:Write-Success { param($Message) Write-Host "[OK] $Message" -ForegroundColor Green }
+function global:Write-Info { param($Message) Write-Host "[INFO] $Message" -ForegroundColor Cyan }
+function global:Write-Warning { param($Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
+function global:Write-Error { param($Message) Write-Host "[ERROR] $Message" -ForegroundColor Red }
+function global:Write-Step { param($Message) Write-Host "[STEP] $Message" -ForegroundColor Blue }
 
 # Show help
 if ($Help) {
     Write-Host @"
-🚀 Workshop MCP Server - Setup Script
+========================================
+Workshop MCP Server - Setup Script
+========================================
 
 USAGE:
     .\setup.ps1                    # Normal setup
@@ -46,7 +48,8 @@ TROUBLESHOOTING:
 }
 
 Write-Host @"
-🚀 Workshop MCP Server - Automated Setup
+========================================
+Workshop MCP Server - Automated Setup
 ========================================
 Starting automated setup process...
 
@@ -72,14 +75,64 @@ else {
     Write-Success "Execution policy is acceptable: $policy"
 }
 
+# Function to find Python installation
+function Find-Python {
+    # Try common Python locations
+    $pythonPaths = @(
+        "python",  # Try PATH first
+        "$env:LOCALAPPDATA\Programs\Python\Python314\python.exe",
+        "$env:LOCALAPPDATA\Programs\Python\Python313\python.exe",
+        "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe",
+        "C:\Python314\python.exe",
+        "C:\Python313\python.exe",
+        "C:\Python312\python.exe",
+        "C:\Program Files\Python314\python.exe",
+        "C:\Program Files\Python313\python.exe",
+        "C:\Program Files\Python312\python.exe"
+    )
+    
+    foreach ($path in $pythonPaths) {
+        try {
+            if ($path -eq "python") {
+                $version = python --version 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    return "python"
+                }
+            }
+            elseif (Test-Path $path) {
+                $version = & $path --version 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    return $path
+                }
+            }
+        }
+        catch {
+            continue
+        }
+    }
+    return $null
+}
+
 # Step 2: Check Python version
 Write-Step "Checking Python version..."
 try {
-    $pythonVersion = python --version 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        Write-Error "Python is not installed or not in PATH"
+    $pythonCmd = Find-Python
+    if ($null -eq $pythonCmd) {
+        Write-Error "Python is not installed or not found"
         Write-Info "Please install Python 3.12+ from https://python.org"
+        Write-Info "Searched in common locations:"
+        Write-Host "  - System PATH" -ForegroundColor Yellow
+        Write-Host "  - $env:LOCALAPPDATA\Programs\Python\" -ForegroundColor Yellow
+        Write-Host "  - C:\PythonXXX\" -ForegroundColor Yellow
+        Write-Host "  - C:\Program Files\PythonXXX\" -ForegroundColor Yellow
         exit 1
+    }
+    
+    # Get version from found Python
+    if ($pythonCmd -eq "python") {
+        $pythonVersion = python --version 2>&1
+    } else {
+        $pythonVersion = & $pythonCmd --version 2>&1
     }
     
     # Extract version number
@@ -89,14 +142,17 @@ try {
         $minor = [int]$Matches[2]
         
         if ($major -lt 3 -or ($major -eq 3 -and $minor -lt 12)) {
-            Write-Error "Python version $pythonVersion detected. Python 3.12+ required."
-            Write-Info "Please install Python 3.12+ from https://python.org"
-            exit 1
+            Write-Warning "Python version $pythonVersion detected. Python 3.12+ recommended."
+            Write-Info "Found Python at: $pythonCmd"
+            Write-Info "The workshop may work but some features might not be available."
+        } else {
+            Write-Success "Python version OK: $pythonVersion"
+            Write-Info "Found at: $pythonCmd"
         }
-        Write-Success "Python version OK: $pythonVersion"
     }
     else {
         Write-Warning "Could not parse Python version, but continuing..."
+        Write-Info "Found Python at: $pythonCmd"
     }
 }
 catch {
@@ -138,11 +194,19 @@ if ($Force -and $venvExists) {
 
 if ($shouldCreateVenv) {
     Write-Step "Creating virtual environment..."
-    $result = python -m venv workshop-env
+    if ($pythonCmd -eq "python") {
+        $result = python -m venv workshop-env 2>&1
+    } else {
+        $result = & $pythonCmd -m venv workshop-env 2>&1
+    }
+    
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to create virtual environment"
-        Write-Info "This might happen if Python was installed for all users but you don't have admin rights."
-        Write-Info "Try installing Python for current user only, or run as administrator."
+        Write-Info "Error output: $result"
+        Write-Info "Possible solutions:"
+        Write-Host "  1. Install Python for current user (not system-wide)" -ForegroundColor Yellow
+        Write-Host "  2. Check if Python installation is complete" -ForegroundColor Yellow
+        Write-Host "  3. Try running as administrator" -ForegroundColor Yellow
         exit 1
     }
     Write-Success "Virtual environment created successfully"
@@ -222,17 +286,7 @@ else {
     Write-Info "Review the validation output above for details"
 }
 
-# Step 9: Test server script (optional)
-Write-Step "Testing server script availability..."
-$serverTest = python server_workshop.py --help 2>&1
-if ($LASTEXITCODE -eq 0) {
-    Write-Success "Server script is accessible"
-}
-else {
-    Write-Info "Server script will be validated in the comprehensive check"
-}
-
-# Step 10: Check for optional .env configuration
+# Step 9: Check for optional .env configuration
 Write-Step "Checking optional configuration..."
 if (!(Test-Path ".env")) {
     if (Test-Path ".env.example") {
@@ -251,45 +305,47 @@ else {
 # Final success message
 Write-Host @"
 
-🎉 SETUP COMPLETED SUCCESSFULLY!
-=================================
+========================================
+SETUP COMPLETED SUCCESSFULLY!
+========================================
 
 Your Workshop MCP Server is ready to use!
 
 WHAT'S INSTALLED:
-✅ Python virtual environment (workshop-env)
-✅ All MCP Server dependencies
-✅ FastMCP framework
-✅ Business Central integration components
+[OK] Python virtual environment (workshop-env)
+[OK] All MCP Server dependencies
+[OK] FastMCP framework
+[OK] Business Central integration components
 
 NEXT STEPS:
-1. 📖 Read the workshop guide: WORKSHOP_GUIDE_EN.md
-2. 🚀 Test the server: python server_workshop.py --help
-3. 🔧 Configure Claude Desktop with your MCP server
-4. 🎓 Complete the workshop exercises
+1. Read the workshop guide: WORKSHOP_GUIDE_EN.md
+2. Test the server: python server_workshop.py --help
+3. Configure Claude Desktop with your MCP server
+4. Complete the workshop exercises
 
 IMPORTANT REMINDERS:
-⚠️  Always activate the virtual environment before working:
-   .\workshop-env\Scripts\Activate.ps1
+[!] Always activate the virtual environment before working:
+    .\workshop-env\Scripts\Activate.ps1
 
-⚠️  Your prompt should show (workshop-env) when active
+[!] Your prompt should show (workshop-env) when active
 
-📚 DOCUMENTATION:
+DOCUMENTATION:
    - Workshop Guide: WORKSHOP_GUIDE_EN.md
    - Troubleshooting: SETUP_TROUBLESHOOTING.md
    - README: README.md
 
-🆘 NEED HELP?
+NEED HELP?
    Check SETUP_TROUBLESHOOTING.md for common issues
 
-Happy coding! 🚀
+Happy coding!
 
 "@ -ForegroundColor Green
 
 # Show current status
 Write-Info "Current status:"
-Write-Host "  📁 Working Directory: $(Get-Location)" -ForegroundColor Cyan
-Write-Host "  🐍 Python Path: $env:VIRTUAL_ENV\Scripts\python.exe" -ForegroundColor Cyan
-Write-Host "  📦 Virtual Environment: ACTIVE" -ForegroundColor Green
+Write-Host "  Working Directory: $(Get-Location)" -ForegroundColor Cyan
+Write-Host "  Python Command: $pythonCmd" -ForegroundColor Cyan
+Write-Host "  Virtual Environment: $env:VIRTUAL_ENV" -ForegroundColor Cyan
+Write-Host "  Status: ACTIVE" -ForegroundColor Green
 
 exit 0
