@@ -148,24 +148,44 @@ Configure in `claude_desktop_config.json` and Claude Desktop launches it automat
 
 ## 📁 Key Files Explained
 
+
+### Repository Structure (clean view)
+
+```text
+Workshop-MCP-Server-Directions-Lab/
+├─ server_workshop.py            # Main MCP server entry point (STDIO)
+├─ src/
+│  ├─ client.py                  # Business Central API client (httpx + AAD auth)
+│  ├─ config.py                  # Env loading and validation (AZURE_* + BC_*)
+│  ├─ tools/                     # Tool handlers exposed to MCP (get_*)
+│  └─ data/                      # Mock JSON data for offline mode
+├─ tests/
+│  ├─ test_server.py             # Lists tools and sanity-checks server
+│  └─ validate_workshop.py       # Environment and dependency checks
+├─ scripts/
+│  ├─ ConfigurationPaths.ps1     # Prints paths for Claude Desktop / MCP Inspector
+│  └─ configure_claude.ps1       # Writes Claude Desktop JSON config
+├─ .env.example                  # Template for AZURE_/BC_ variables
+├─ WORKSHOP_GUIDE_EN.md
+└─ QUICK_START_GUIDE.md
+```
+
+**Note**: Paths in this guide use placeholders like `C:/Users/YourName/...` or `~/...` to avoid noise. Replace with your actual paths.
+
 ### 1. `.env` - Environment Configuration
 
 **Purpose**: Stores sensitive credentials and configuration values.
 
 **What it contains**:
 ```env
-# Azure Active Directory credentials
-AZURE_CLIENT_ID=your-app-client-id
-AZURE_CLIENT_SECRET=your-app-secret
-AZURE_TENANT_ID=your-tenant-id
+# Azure Active Directory
+AZURE_TENANT_ID=your-tenant-id-guid
+AZURE_CLIENT_ID=your-app-registration-client-id
+AZURE_CLIENT_SECRET=your-app-registration-secret
 
-# Business Central environment details
+# Business Central context
 BC_ENVIRONMENT=production
 BC_COMPANY_ID=your-company-guid
-
-# Server configuration
-SERVER_PORT=8000
-LOG_LEVEL=INFO
 ```
 
 **Why it's important**:
@@ -755,8 +775,8 @@ Run the validation script to ensure everything is configured correctly:
 > **Tip**: If your virtual environment is consistently activated, you can also use `python validate_workshop.py`
 
 **Expected output**:
-```
- MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)
+```text
+MCP WORKSHOP VALIDATOR - BUSINESS CENTRAL (STDIO)
 ============================================================
 
 ============================================================
@@ -839,10 +859,16 @@ Before configuring Claude Desktop, you can quickly test that the server is worki
 
 ```bash
 .\workshop-env\Scripts\python.exe test_server.py
+get_customers           # List customers (top, filter)
+get_items               # List items (top, filter)
+get_sales_orders        # List sales orders (top, filter, status)
+get_projects            # List projects/jobs
+get_customer_details    # Details by id or name
+get_currency_exchange_rates  # BC rates endpoint
 ```
 
 **Expected output**:
-```
+```text
 ============================================================
  MCP SERVER QUICK TEST
 ============================================================
@@ -926,20 +952,9 @@ Server Script:
   C:\Users\YourName\Documents\...\server_workshop.py
 
 ============================================================
- FOR CLAUDE DESKTOP (JSON format)
+FOR CLAUDE DESKTOP (JSON format)
 ============================================================
-Command:    C:/Users/YourName/Documents/.../python.exe
-Args:       C:/Users/YourName/Documents/.../server_workshop.py
-PYTHONPATH: C:/Users/YourName/Documents/Workshop-MCP-Server-Directions-Lab
-
-============================================================
- FOR MCP INSPECTOR (Windows format)
-============================================================
-Transport Type: STDIO
-Command:        C:\Users\YourName\Documents\...\python.exe
-Arguments:      C:\Users\YourName\Documents\...\server_workshop.py
-Env (optional): PYTHONPATH=C:\Users\YourName\Documents\...
-```
+```json
 
 > 💡 **Tip**: Keep this terminal window open, or run `.\ConfigurationPaths.ps1` again anytime you need the paths.
 
@@ -1031,9 +1046,9 @@ Once connected, you should see:
 > **Tip**: Alternatively, you can use `python server_workshop.py` if your virtual environment is properly activated
 
 **Expected output (STDIO Server)**:
-```
-2025-10-11 10:11:03,178 INFO __main__: [START] MCP Workshop Server with STDIO transport
-2025-10-11 10:11:03,178 INFO __main__: [READY] Ready for Claude Desktop connection
+```text
+INFO __main__: [START] MCP Workshop Server with STDIO transport
+INFO __main__: [READY] Ready for Claude Desktop connection
 [Server waits for STDIO input/output from Claude Desktop]
 ```
 
@@ -1261,7 +1276,7 @@ Now let's configure Claude Desktop to use our MCP server for real-world AI assis
 #### 9.1 Locate Claude Configuration File
 
 **Windows**:
-```
+```text
 %APPDATA%\Claude\claude_desktop_config.json
 ```
 

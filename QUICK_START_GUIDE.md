@@ -50,13 +50,15 @@ Create `.env` file for Business Central integration:
 # Copy the template
 cp .env.example .env
 
-# Edit with your Business Central credentials
-# BC_TENANT_ID=your-azure-ad-tenant-id
-# BC_CLIENT_ID=your-app-registration-client-id
-# BC_CLIENT_SECRET=your-app-registration-secret
+# Edit with your Business Central & Azure credentials
+# AZURE_TENANT_ID=your-azure-ad-tenant-id
+# AZURE_CLIENT_ID=your-app-registration-client-id
+# AZURE_CLIENT_SECRET=your-app-registration-secret
 # BC_ENVIRONMENT=your-bc-environment-name
 # BC_COMPANY_ID=your-company-id
 ```
+
+> 🧩 The server reads AZURE_* for AAD and BC_* for Business Central context, matching the Workshop Guide.
 
 > 🧪 **Skip this step** to use mock data mode (not recommended for learning)
 
@@ -107,6 +109,15 @@ AVAILABLE TOOLS:
 
 3. get_sales_orders
    Description: Get sales orders from Business Central
+
+4. get_projects
+   Description: Get projects from Business Central
+
+5. get_customer_details
+   Description: Get a customer by ID or name
+
+6. get_currency_exchange_rates
+   Description: Get currency exchange rates
 
 [INFO] Total tools available: 6
 [SUCCESS] Test completed successfully!
