@@ -31,7 +31,7 @@ Before starting the workshop, ensure you have:
 
 ### Required for Business Central Integration (Workshop Objective):
 - 🏭 **Azure AD Tenant** with Business Central access
-- � **Business Central Environment** with Standard API v2.0 enabled:
+-  **Business Central Environment** with Standard API v2.0 enabled:
   - Sandbox or Production environment
   - API endpoints: `/api/v2.0/companies`, `/items`, `/customers`, `/salesOrders`, etc.
   - Company name and Environment name
@@ -54,7 +54,7 @@ Before starting the workshop, ensure you have:
 
 ---
 
-## �📚 Quick Start
+## 📚 Quick Start
 
 ### 📥 Step 1: Download the Repository
 
@@ -67,25 +67,25 @@ Before starting the workshop, ensure you have:
    cd Workshop-MCP-Server-Directions-Lab-main
    ```
 
-### �🚀 Step 2: Automated Setup (Recommended - 2 minutes)
+### 🚀 Step 2: Automated Setup (Recommended - 2 minutes)
 
 **For Windows PowerShell:**
 ```powershell
 # Run the automated setup script
-.\setup.ps1
+.\scripts\setup_workshop.ps1
 
 # For help and options:
-.\setup.ps1 -Help
+.\scripts\setup_workshop.ps1 -Help
 
 # Force recreate virtual environment:
-.\setup.ps1 -Force
+.\scripts\setup_workshop.ps1 -Force
 ```
 
 **For macOS/Linux:**
 ```bash
 # Make script executable and run
 chmod +x setup.sh
-./setup.sh
+./scripts/setup.sh
 ```
 
 The automated scripts will:
@@ -125,9 +125,15 @@ pip install -r requirements.txt
 # 3. Configure credentials (optional - works with mock data)
 cp .env.example .env
 # Edit .env with your Azure AD and Business Central credentials
+# Example:
+# AZURE_TENANT_ID=your-tenant-id-guid
+# AZURE_CLIENT_ID=your-app-registration-client-id
+# AZURE_CLIENT_SECRET=your-app-registration-secret
+# BC_ENVIRONMENT=production
+# BC_COMPANY_ID=your-company-guid
 
 # 4. Test the server works
-python test_server.py
+python tests/test_server.py
 ```
 
 **Expected output**: The test script will show all available MCP tools:
@@ -146,7 +152,7 @@ AVAILABLE TOOLS:
 [SUCCESS] Test completed successfully!
 ```
 
-> 💡 **Quick test**: Use `python test_server.py` to verify your server is working correctly
+> 💡 **Quick test**: Use `python tests/test_server.py` to verify your server is working correctly
 
 > 🚨 **Having setup issues?** See [SETUP_TROUBLESHOOTING.md](SETUP_TROUBLESHOOTING.md) for common solutions!
 
@@ -167,7 +173,7 @@ mcp-inspector
 **Get Configuration Paths:**
 ```powershell
 # Run the configuration paths script
-.\ConfigurationPaths.ps1
+.\scripts\scripts/ConfigurationPaths.ps1
 ```
 
 This script will display:
@@ -206,7 +212,7 @@ This script will display:
 
 ```powershell
 # Run the automated configuration script
-.\configure_claude.ps1
+.\scripts\configure_claude.ps1
 ```
 
 This script will:
@@ -226,7 +232,7 @@ Then restart Claude Desktop and start using your MCP tools!
 **Get your paths first:**
 ```powershell
 # Run the configuration paths script
-.\ConfigurationPaths.ps1
+.\scripts\scripts/ConfigurationPaths.ps1
 ```
 
 Copy the paths from the "FOR CLAUDE DESKTOP (JSON format)" section.
@@ -272,6 +278,32 @@ Then restart Claude Desktop and start using your MCP tools!
 ```
 You should see this structure:
 
+Workshop-MCP-Server-Directions-Lab/
+├── server_workshop.py              # Main MCP server (STDIO transport)
+├── requirements.txt                # Python dependencies
+├── scripts/
+│   ├── setup_workshop.ps1          # Automated setup (Windows)
+│   ├── setup.sh                    # Automated setup (macOS/Linux)
+│   ├── ConfigurationPaths.ps1      # Get paths for Claude Desktop & MCP Inspector
+│   └── configure_claude.ps1        # Writes Claude Desktop config
+├── src/
+│   ├── azure_auth.py               # Azure AD authentication
+│   ├── client.py                   # Business Central client
+│   ├── config.py                   # Configuration
+│   ├── tools/                      # MCP tools (get_*)
+│   └── data/                       # Sample/mock data
+│       ├── categories.csv
+│       ├── prices.csv
+│       ├── substitutes.csv
+│       ├── sales_orders.csv
+│       ├── payment_terms.csv
+│       └── price-analysis.json
+├── tests/
+│   ├── validate_workshop.py        # Validation script
+│   └── test_server.py              # Quick server test (lists tools)
+├── README.md                       # This file
+├── QUICK_START_GUIDE.md            # Quick start instructions
+└── WORKSHOP_GUIDE_EN.md            # Complete step-by-step guide
 ```
 Workshop-MCP-Server-Directions-Lab/
 ├── 📄 server_workshop.py           # Main MCP server (STDIO transport)
@@ -281,8 +313,8 @@ Workshop-MCP-Server-Directions-Lab/
 ├── 📄 requirements.txt             # Python dependencies
 ├── 📄 setup.ps1                    # Automated setup (Windows)
 ├── 📄 setup.sh                     # Automated setup (macOS/Linux)
-├── � ConfigurationPaths.ps1       # Get paths for Claude Desktop & MCP Inspector
-├── �🔒 .env.example                 # Environment template
+├──  scripts/ConfigurationPaths.ps1       # Get paths for Claude Desktop & MCP Inspector
+├── 🔒 .env.example                 # Environment template
 ├── 📖 README.md                    # This file
 ├── 📖 QUICK_START_GUIDE.md         # Quick start instructions
 ├── 📖 WORKSHOP_GUIDE_EN.md         # Complete step-by-step guide
@@ -472,7 +504,7 @@ If you encounter problems:
 1. 📖 Review the **Troubleshooting** section in [WORKSHOP_GUIDE_EN.md](WORKSHOP_GUIDE_EN.md)
 2. 🔍 Check logs in Claude Desktop (View → Developer → Developer Tools)
 3. 🌐 Verify credentials if using Business Central
-4. ✅ Run `python validate_workshop.py` to check your setup
+4. ✅ Run `python tests/validate_workshop.py` to check your setup
 
 ### 📚 Learning More
 

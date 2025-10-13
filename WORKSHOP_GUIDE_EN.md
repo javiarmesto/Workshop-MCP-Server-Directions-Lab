@@ -163,7 +163,15 @@ Workshop-MCP-Server-Directions-Lab/
 │  ├─ test_server.py             # Lists tools and sanity-checks server
 │  └─ validate_workshop.py       # Environment and dependency checks
 ├─ scripts/
-│  ├─ ConfigurationPaths.ps1     # Prints paths for Claude Desktop / MCP Inspector
+│  ├─ ConfigurationPaths.ps1
+
+#### Troubleshooting: PowerShell policy
+If PowerShell blocks execution of `.ps1` scripts during setup on Windows, run in an elevated PowerShell:
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+This changes the policy only for the current session.
+     # Prints paths for Claude Desktop / MCP Inspector
 │  └─ configure_claude.ps1       # Writes Claude Desktop JSON config
 ├─ .env.example                  # Template for AZURE_/BC_ variables
 ├─ WORKSHOP_GUIDE_EN.md
@@ -550,26 +558,35 @@ cd Workshop-MCP-Server-Directions-Lab-main
 
 **What you'll see**:
 ```
+What you'll see:
+
 Workshop-MCP-Server-Directions-Lab/
- server_workshop.py Main server file
- validate_workshop.py Setup validator
- test_server.py Quick server test
- setup.ps1 Automated setup (Windows)
- .env.example Configuration template
- requirements.txt Python dependencies
- src/ Source code modules
- client.py Business Central API client
- config.py Configuration management
- azure_auth.py Azure AD authentication
- data/ Sample data files
- categories.csv
- prices.csv
- substitutes.csv
- sales_orders.csv
- payment_terms.csv
- price-analysis.json
- README.md Data documentation
- archive/ Archived files (HTTP version, old tests)
+├─ server_workshop.py              # Main MCP server (STDIO)
+├─ .env.example                    # Configuration template (AZURE_*, BC_*)
+├─ requirements.txt                # Python dependencies
+├─ scripts/
+│  ├─ setup_workshop.ps1           # Automated setup (Windows)
+│  ├─ ConfigurationPaths.ps1       # Prints paths for Claude/Inspector
+│  └─ configure_claude.ps1         # Writes Claude Desktop config
+├─ src/
+│  ├─ client.py                    # Business Central API client (httpx + AAD)
+│  ├─ config.py                    # Env loading & validation
+│  ├─ azure_auth.py                # Azure AD auth helpers
+│  ├─ tools/                       # MCP tool handlers (get_*)
+│  └─ data/                        # Mock/offline data
+│     ├─ categories.csv
+│     ├─ prices.csv
+│     ├─ substitutes.csv
+│     ├─ sales_orders.csv
+│     ├─ payment_terms.csv
+│     └─ price-analysis.json
+├─ tests/
+│  ├─ validate_workshop.py         # Setup validator
+│  └─ test_server.py               # Quick server test (lists tools)
+├─ WORKSHOP_GUIDE_EN.md
+├─ QUICK_START_GUIDE.md
+└─ archive/                        # Archived (HTTP version, old tests)
+
 ```
 
 ---
@@ -966,7 +983,42 @@ FOR CLAUDE DESKTOP (JSON format)
 
 #### 7.1 Install MCP Inspector
 
-```bash
+```
+
+#### Minimal Claude Desktop config (copy-paste ready)
+Use this in your `claude_desktop_config.json` under `mcpServers`:
+```json
+{
+  "mcpServers": {
+    "bc-workshop": {
+      "command": "C:/Users/YourName/Documents/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
+      "args": [
+        "C:/Users/YourName/Documents/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
+      ],
+      "env": {
+        "PYTHONPATH": "C:/Users/YourName/Documents/Workshop-MCP-Server-Directions-Lab"
+      }
+    }
+  }
+}
+```
+**macOS/Linux example**:
+```json
+{
+  "mcpServers": {
+    "bc-workshop": {
+      "command": "/Users/yourname/Workshop-MCP-Server-Directions-Lab/workshop-env/bin/python",
+      "args": [
+        "/Users/yourname/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/yourname/Workshop-MCP-Server-Directions-Lab"
+      }
+    }
+  }
+}
+```
+bash
 npx @modelcontextprotocol/inspector
 ```
 
@@ -1772,3 +1824,12 @@ You've completed the MCP Server Workshop! You now understand:
 ---
 
 **Congratulations on completing the MCP Server Workshop!** You've successfully learned how to build custom MCP tools that integrate with Business Central APIs. Keep building amazing AI-powered solutions.
+
+
+## 🔥 Smoke test (clean environment)
+1. Clone fresh: `git clone https://github.com/javiarmesto/Workshop-MCP-Server-Directions-Lab`
+2. Automated setup: run `scripts/setup_workshop.ps1` or follow Step 2 (manual).
+3. Validate: `python tests/validate_workshop.py` → expect all PASS.
+4. List tools: `python tests/test_server.py` → expect 6 tools and success.
+5. Launch Claude Desktop and ask: “Using bc-workshop, list top 5 customers.” → expect a table or list with 5 entries.
+6. If no BC credentials, repeat step 5 in mock mode; if using real BC, ensure `.env` is filled.
