@@ -201,58 +201,55 @@ python server_workshop.py
 
 ---
 
-#### Exercise 4: Implement `get_payment_terms` Tool (Hands-on)
+#### Exercise 4: Implement `get_projects` Tool (Hands-on)
 
-**Goal**: Add a new tool for Business Central payment terms
+**Goal**: Add a new tool for Business Central projects (jobs)
 
-**Business Central API**: `GET /api/v2.0/companies({id})/paymentTerms` ✅
+**Business Central API**: `GET /api/v2.0/companies({id})/jobs` ✅
 
-> 🔧 **This tool needs to be implemented** - follow these steps:
+> 🔧 **This tool also needs to be implemented** - follow these steps:
 
-##### Step 4.1: Verify mock data exists
+##### Step 4.1: Add method to `src/client.py`
 
-Check that `data/payment_terms.csv` exists with this structure:
-
-```csv
-id,code,displayName,dueDateCalculation,discountDateCalculation,discountPercent
-PT001,NET30,Net 30 Days,30D,0D,0
-PT002,NET15,Net 15 Days,15D,0D,0
-PT003,COD,Cash on Delivery,0D,0D,0
-PT004,210NET30,2/10 Net 30,30D,10D,2
-PT005,NET60,Net 60 Days,60D,0D,0
-```
-
-##### Step 4.2: Add method to `src/client.py`
-
-Add this method after `get_sales_orders()`:
+Add this method after `get_employees()`:
 
 ```python
-async def get_payment_terms(self, top: int = 20) -> List[Dict]:
+async def get_projects(self, top: int = 20) -> List[Dict]:
     """
-    Gets payment terms from Business Central.
-    Parameters:
-        top (int): Maximum number of terms to return (default 20).
+    Gets projects (jobs) from Business Central using Standard API v2.0
+    
+    Business Central API: GET /api/v2.0/companies({id})/jobs
+    Authentication: OAuth 2.0 with Azure AD
+    
+    Args:
+        top: Maximum number of projects to return (default 20)
+        
     Returns:
-        List of dictionaries with payment terms.
+        List of projects from Business Central
     """
-    res = await self._request("GET", "paymentTerms", params={"$top": top})
+    res = await self._request("GET", "jobs", params={"$top": top})
+    if res:
+        logger.info(f"Projects retrieved: {len(res.get('value', []))}")
+    else:
+        logger.error("Could not retrieve projects list.")
     return res.get("value", []) if res else []
 ```
 
-##### Step 4.3: Register tool in `server_workshop.py`
+##### Step 4.2: Register tool in `server_workshop.py`
 
 1. **Add to tools list** in `handle_list_tools()`:
 
 ```python
+# Projects Tool - Standard BC API
 types.Tool(
-    name="get_payment_terms",
-    description="💳 Get payment terms from Business Central",
+    name="get_projects",
+    description="� Get projects (jobs) from Business Central using standard API",
     inputSchema={
         "type": "object",
         "properties": {
             "top": {
                 "type": "number",
-                "description": "Maximum number of terms to return (default: 20)",
+                "description": "Maximum number of projects to return (default: 20)",
                 "default": 20
             }
         }
@@ -263,11 +260,11 @@ types.Tool(
 2. **Add to tool handler** in `handle_call_tool()`:
 
 ```python
-elif tool_name == "get_payment_terms":
+elif tool_name == "get_projects":
     top = arguments.get("top", 20)
     logger.info(f"📞 Calling tool: {tool_name} with top={top}")
     
-    result = await bc_client.get_payment_terms(top=top)
+    result = await bc_client.get_projects(top=top)
     
     return types.CallToolResult(content=[
         types.TextContent(
@@ -277,21 +274,20 @@ elif tool_name == "get_payment_terms":
     ])
 ```
 
-##### Step 4.4: Test your implementation
+##### Step 4.3: Test your implementation
 
 1. **Restart Claude Desktop**
-2. **Verify new tool appears**: Should now see 7 tools total
-3. **Test the tool**:
+2. **Test the tool**:
 
 ```text
-"Show me the payment terms from Business Central"
-"List all available payment terms"
-"What payment terms do we have?"
+"Show me the projects from Business Central"
+"Get the top 5 projects"
+"List all jobs in our BC system"
 ```
 
 **Expected results**:
-- ✅ Real payment terms data from Business Central
-- Payment codes, descriptions, due date calculations, and discount terms
+- ✅ Real project data from Business Central
+- Project numbers, descriptions, status, customer information, and project details
 - Standard Business Central API v2.0 structure
 
 ---

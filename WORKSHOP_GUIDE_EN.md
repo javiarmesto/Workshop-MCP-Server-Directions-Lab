@@ -1365,7 +1365,7 @@ Welcome to the hands-on section! You'll learn by doing:
 - **Part B (Exercises 3-4)**: Implement new tools using **Business Central Standard APIs**
 
 > 🏭 **Workshop Objective**: We connect directly to **Business Central Standard APIs v2.0**  
-> 🎯 **Focus**: Real API integration with `/companies`, `/customers`, `/salesOrders`, `/paymentTerms`  
+> 🎯 **Focus**: Real API integration with `/companies`, `/customers`, `/employees`, `/jobs`  
 > ⚠️ **Mock Data**: Only used as exceptional fallback when BC credentials are unavailable
 
 ---
@@ -1752,43 +1752,6 @@ async def get_projects(self, top: int = 20) -> List[Dict]:
         logger.error("Could not retrieve projects list.")
     return res.get("value", []) if res else []
 ```
-            # Use mock data if no Business Central credentials
-            if not self.access_token:
-                logger.info("📁 Using mock payment terms data")
-                return self._get_mock_payment_terms()
-            
-            # Call standard Business Central API
-            endpoint = f"{self.base_url}/paymentTerms"
-            
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    endpoint,
-                    headers=self.headers,
-                    timeout=30.0
-                )
-                response.raise_for_status()
-                data = response.json()
-                return data.get("value", [])
-                
-        except Exception as e:
-            logger.error(f"Error fetching payment terms: {e}")
-            return self._get_mock_payment_terms()
-    
-    def _get_mock_payment_terms(self) -> List[Dict[str, Any]]:
-        """Load payment terms from CSV file"""
-        csv_path = Path(__file__).parent.parent / "data" / "payment_terms.csv"
-        
-        if not csv_path.exists():
-            return []
-        
-        terms = []
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                terms.append(row)
-        
-        return terms
-```
 
 ---
 
@@ -1862,7 +1825,7 @@ Claude calls the Business Central Standard API: `GET /api/v2.0/companies({id})/j
 ✅ **Client methods**: calling BC APIs + mock data fallback  
 ✅ **Tool handlers**: processing requests and returning results  
 ✅ **Mock data**: CSV files for testing  
-✅ **Standard BC APIs**: `/salesOrders`, `/paymentTerms`  
+✅ **Standard BC APIs**: `/employees`, `/jobs`  
 
 ### Key Concepts:
 - **Standard APIs**: No custom extensions needed
