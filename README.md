@@ -72,13 +72,13 @@ Before starting the workshop, ensure you have:
 **For Windows PowerShell:**
 ```powershell
 # Run the automated setup script
-.\scripts\setup_workshop.ps1
+.\setup.ps1
 
 # For help and options:
-.\scripts\setup_workshop.ps1 -Help
+.\setup.ps1 -Help
 
 # Force recreate virtual environment:
-.\scripts\setup_workshop.ps1 -Force
+.\setup.ps1 -Force
 ```
 
 **For macOS/Linux:**
@@ -113,9 +113,9 @@ python -m venv workshop-env
 
 # Activate virtual environment
 # Windows PowerShell:
-.\workshop-env\Scripts\Activate.ps1
+.\workshop-env\Activate.ps1
 # Windows CMD:
-workshop-env\Scripts\activate.bat
+workshop-env\activate.bat
 # macOS/Linux:
 source workshop-env/bin/activate
 
@@ -133,7 +133,7 @@ cp .env.example .env
 # BC_COMPANY_ID=your-company-guid
 
 # 4. Test the server works
-python tests/test_server.py
+python ./test_server.py
 ```
 
 **Expected output**: The test script will show all available MCP tools:
@@ -173,7 +173,7 @@ mcp-inspector
 **Get Configuration Paths:**
 ```powershell
 # Run the configuration paths script
-.\scripts\scripts/ConfigurationPaths.ps1
+.\ConfigurationPaths.ps1
 ```
 
 This script will display:
@@ -212,7 +212,7 @@ This script will display:
 
 ```powershell
 # Run the automated configuration script
-.\scripts\configure_claude.ps1
+.\configure_claude.ps1
 ```
 
 This script will:
@@ -232,7 +232,7 @@ Then restart Claude Desktop and start using your MCP tools!
 **Get your paths first:**
 ```powershell
 # Run the configuration paths script
-.\scripts\scripts/ConfigurationPaths.ps1
+.\ConfigurationPaths.ps1
 ```
 
 Copy the paths from the "FOR CLAUDE DESKTOP (JSON format)" section.
@@ -278,32 +278,6 @@ Then restart Claude Desktop and start using your MCP tools!
 ```
 You should see this structure:
 
-Workshop-MCP-Server-Directions-Lab/
-├── server_workshop.py              # Main MCP server (STDIO transport)
-├── requirements.txt                # Python dependencies
-├── scripts/
-│   ├── setup_workshop.ps1          # Automated setup (Windows)
-│   ├── setup.sh                    # Automated setup (macOS/Linux)
-│   ├── ConfigurationPaths.ps1      # Get paths for Claude Desktop & MCP Inspector
-│   └── configure_claude.ps1        # Writes Claude Desktop config
-├── src/
-│   ├── azure_auth.py               # Azure AD authentication
-│   ├── client.py                   # Business Central client
-│   ├── config.py                   # Configuration
-│   ├── tools/                      # MCP tools (get_*)
-│   └── data/                       # Sample/mock data
-│       ├── categories.csv
-│       ├── prices.csv
-│       ├── substitutes.csv
-│       ├── sales_orders.csv
-│       ├── payment_terms.csv
-│       └── price-analysis.json
-├── tests/
-│   ├── validate_workshop.py        # Validation script
-│   └── test_server.py              # Quick server test (lists tools)
-├── README.md                       # This file
-├── QUICK_START_GUIDE.md            # Quick start instructions
-└── WORKSHOP_GUIDE_EN.md            # Complete step-by-step guide
 ```
 Workshop-MCP-Server-Directions-Lab/
 ├── 📄 server_workshop.py           # Main MCP server (STDIO transport)
