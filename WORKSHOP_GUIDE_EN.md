@@ -413,7 +413,7 @@ if __name__ == "__main__":
 4. MCP client (Claude Desktop) connects via HTTP
 5. Client sends JSON-RPC requests (e.g., "tools/list")
 6. Server processes request and returns response
-7. Student can modify server to add new tools/prompts
+7. You can modify server to add new tools/prompts
 
 ---
 
@@ -440,11 +440,11 @@ Before starting the workshop, ensure you have the following:
 
 ### Required for Business Central Integration (Workshop Objective):
 
-> **Important**: This workshop is designed to work with **real Business Central environments**. The following setup is essential for the full workshop experience.
+> **Important**: This workshop is designed to work with **Business Central environments**. The following setup is essential for the full workshop experience.
 
 - **Azure AD Tenant** with Business Central access
-- **Business Central Environment** (Sandbox or Production):
- - **Environment name** (e.g., "Production", "Sandbox")
+- **Business Central Environment** (Sandbox):
+ - **Environment name** (e.g., "Sandbox")
  - **Company name** (e.g., "CRONUS USA, Inc.")
  - **API base URL** (e.g., `https://api.businesscentral.dynamics.com/v2.0/{tenant-id}/{environment}/api/v2.0/`)
  - **Standard API v2.0 enabled** with available endpoints:
@@ -1036,19 +1036,19 @@ When MCP Inspector opens in your browser:
 
 2. **Command**: Use the Python executable path from Step 6:
    ```
-   C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe
+   C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe
    ```
    (or use the path shown in your Step 6 output)
 
 3. **Arguments**: Use the server script path from Step 6:
    ```
-   C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py
+   C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py
    ```
    (or use the path shown in your Step 6 output)
 
 4. **Environment Variables** (Optional but recommended):
    ```
-   PYTHONPATH=C:/Users/JavierArmestoGonzále/Documents/AL/Workshop-MCP-Server-Directions-Lab
+   PYTHONPATH=C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab
    ```
 
 5. Click **Connect**
@@ -1424,7 +1424,7 @@ Paste this template and **replace the paths** with the ones you got from Step 1:
 
 ** CRITICAL: Use Full Python Path**
 
-During our testing, we discovered that even with the virtual environment activated, using just `python` may not work correctly in PowerShell. **Always use the full path to the Python executable** as shown in the configuration above.
+**Always use the full path to the Python executable** as shown in the configuration above.
 
 ** IMPORTANT**: Replace `YOUR_USERNAME` with your actual Windows username!
 
@@ -1433,12 +1433,12 @@ During our testing, we discovered that even with the virtual environment activat
 {
  "mcpServers": {
  "bc-workshop-server": {
- "command": "C:/Users/JavierArmestoGonzle/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
+ "command": "C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab/workshop-env/Scripts/python.exe",
  "args": [
- "C:/Users/JavierArmestoGonzle/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
+ "C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab/server_workshop.py"
  ],
  "env": {
- "PYTHONPATH": "C:/Users/JavierArmestoGonzle/Documents/AL/Workshop-MCP-Server-Directions-Lab"
+ "PYTHONPATH": "C:/Users/JohnDoe/Documents/AL/Workshop-MCP-Server-Directions-Lab"
  }
  }
  }
