@@ -68,17 +68,18 @@ cp .env.example .env
 # Activate virtual environment (if not already active)
 .\workshop-env\Scripts\activate  # Windows
 source workshop-env/bin/activate  # macOS/Linux
-
+#Install dependencies
+python -m pip install -r requirements.txt
 # Run validation
 python validate_workshop.py
 ```
 
-**Expected output**: All checks should pass (6/6)
+**Expected output**: All checks should pass (5/6)
 
 ```
 [PASS] Python Version
 [PASS] Dependencies  
-[PASS] Files
+[FAIL] Files
 [PASS] Configuration
 [PASS] Data Files
 [PASS] Server Import
