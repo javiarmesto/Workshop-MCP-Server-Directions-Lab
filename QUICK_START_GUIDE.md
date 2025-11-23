@@ -391,24 +391,24 @@ Open `src/client.py` and **add this method** after the `get_currency_exchange_ra
 
 ```python
 async def get_employees(self, top: int = 20) -> List[Dict]:
- """
- Gets employees from Business Central using Standard API v2.0
- 
- Business Central API: GET /api/v2.0/companies({id})/employees
- Authentication: OAuth 2.0 with Azure AD
- 
- Args:
- top: Maximum number of employees to return (default 20)
- 
- Returns:
- List of employees from Business Central
- """
- res = await self._request("GET", "employees", params={"$top": top})
- if res:
- logger.info(f"Employees retrieved: {len(res.get('value', []))}")
- else:
- logger.error("Could not retrieve employees list.")
- return res.get("value", []) if res else []
+        """
+        Gets employees from Business Central using Standard API v2.0
+        
+        Business Central API: GET /api/v2.0/companies({id})/employees
+        Authentication: OAuth 2.0 with Azure AD
+        
+        Args:
+        top: Maximum number of employees to return (default 20)
+        
+        Returns:
+        List of employees from Business Central
+        """
+        res = await self._request("GET", "employees", params={"$top": top})
+        if res:
+            logger.info(f"Employees retrieved: {len(res.get('value', []))}")
+        else:
+            logger.error("Could not retrieve employees list.")
+        return res.get("value", []) if res else []
 ```
 
 **Key points about this implementation**:
@@ -423,21 +423,20 @@ async def get_employees(self, top: int = 20) -> List[Dict]:
 **1. Add to tools list** in `handle_list_tools()` method (around line 110):
 
 ```python
-# Employees Tool - Standard BC API
 types.Tool(
- name="get_employees",
- description=" Get employees from Business Central using standard API",
- inputSchema={
- "type": "object",
- "properties": {
- "top": {
- "type": "number",
- "description": "Maximum number of employees to return (default: 20)",
- "default": 20
- }
- }
- }
-),
+            name="get_employees",
+            description="👥 Get employees from Business Central using standard API",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "top": {
+                        "type": "integer",
+                        "description": "Maximum number of employees to return (default: 20)"
+                    }
+                },
+                "additionalProperties": False
+            }
+        ),
 ```
 
 **2. Add tool handler** in `handle_call_tool()` method (around line 200):
