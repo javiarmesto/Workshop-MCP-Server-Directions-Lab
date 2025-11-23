@@ -443,18 +443,22 @@ types.Tool(
 **2. Add tool handler** in `handle_call_tool()` method (around line 200):
 
 ```python
-elif tool_name == "get_employees":
- top = arguments.get("top", 20)
- logger.info(f" Calling tool: {tool_name} with top={top}")
- 
- result = await bc_client.get_employees(top=top)
- 
- return types.CallToolResult(content=[
- types.TextContent(
- type="text",
- text=json.dumps(result, indent=2, ensure_ascii=False)
- )
- ])
+  elif name == "get_employees":
+            top = arguments.get("top", 20)
+            employees = await bc_client.get_employees(top=top)
+            
+            return [
+                types.TextContent(
+                    type="text",
+                    text=f"👥 **Business Central Employees** (Showing {len(employees)} results)\n\n" +
+                         "\n".join([
+                             f"• **{employee.get('displayName', 'N/A')}** (ID: {employee.get('id', 'N/A')})\n"
+                             f"  📧 {employee.get('email', 'N/A')}\n"
+                             f"  📞 {employee.get('phoneNumber', 'N/A')}\n"
+                             for employee in employees
+                         ])
+                )
+            ]
 ```
 
 #### Step 3.3: Test Your New Employees Tool
