@@ -275,7 +275,6 @@ Then restart Claude Desktop and start using your MCP tools!
 
 ## 📁 Repository Structure
 
-```
 You should see this structure:
 
 ```
@@ -307,8 +306,6 @@ Workshop-MCP-Server-Directions-Lab/
     ├── payment_terms.csv           # Mock payment terms
     └── price-analysis.json         # Price analysis data
 ```
-
----
 
 ## 🔧 Prerequisites
 
