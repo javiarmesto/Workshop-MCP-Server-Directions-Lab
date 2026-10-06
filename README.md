@@ -1,5 +1,14 @@
 # 🚀 MCP Server Workshop - Business Central Integration
 
+## Choose a route
+
+**Learn MCP locally:** start without BC credentials; `src/config.py` permits mock mode. Create the venv and run `python test_server.py` from the repository root. The expected result is MCP tool discovery using sample data; it does not validate Entra authentication or live BC.
+
+**Connect your own BC sandbox:** configure `.env` from `.env.example`, authorize the application and company, then verify a read with your own client. Do not mix a successful mock test with a successful BC API call.
+
+The root contains `server_workshop.py`, `setup.ps1`, `setup.sh`, `ConfigurationPaths.ps1`, `test_server.py` and `validate_workshop.py`; `src/` and `data/` contain modules and samples. No root `scripts/` or `tests/` directory is supplied. Static documentation review: **6 October 2026**; no dependency installation or MCP invocation performed. No applicable license file confirmed.
+
+
 Welcome to the **MCP Server Workshop**! This workshop teaches you to build a complete MCP (Model Context Protocol) server with STDIO transport for Claude Desktop, integrated with Microsoft Dynamics 365 Business Central.
 
 > ⏱️ **Workshop Duration**: 20-30 minutes  
@@ -29,7 +38,7 @@ Before starting the workshop, ensure you have:
 - 💻 **Claude Desktop** app installed ([Download here](https://claude.ai/download))
 - 📦 Basic command line knowledge (terminal/PowerShell)
 
-### Required for Business Central Integration (Workshop Objective):
+### Only required for the real Business Central route:
 - 🏭 **Azure AD Tenant** with Business Central access
 -  **Business Central Environment** with Standard API v2.0 enabled:
   - Sandbox or Production environment
@@ -40,12 +49,12 @@ Before starting the workshop, ensure you have:
   - API permissions for Business Central (Dynamics 365 Business Central)
   - Redirect URI configured (if needed)
 
-### Alternative (Only if BC access is not available):
+### Local MCP learning route (mock data):
 - 🧪 **Mock Data Mode**: The workshop includes mock data as a fallback
   - Allows completing exercises without real BC connection
   - Limited to testing MCP protocol mechanics
   - Does not demonstrate real authentication or API integration
-  - **Not recommended** for full workshop experience
+  - Use the real BC route when authentication and live APIs are your learning objective
 
 ### Good to Know:
 - ✅ Virtual environment setup is automated via scripts
@@ -85,7 +94,7 @@ Before starting the workshop, ensure you have:
 ```bash
 # Make script executable and run
 chmod +x setup.sh
-./scripts/setup.sh
+./setup.sh
 ```
 
 The automated scripts will:
@@ -113,9 +122,9 @@ python -m venv workshop-env
 
 # Activate virtual environment
 # Windows PowerShell:
-.\workshop-env\Activate.ps1
+.\workshop-env\Scripts\Activate.ps1
 # Windows CMD:
-workshop-env\activate.bat
+workshop-env\Scripts\activate.bat
 # macOS/Linux:
 source workshop-env/bin/activate
 
@@ -152,9 +161,9 @@ AVAILABLE TOOLS:
 [SUCCESS] Test completed successfully!
 ```
 
-> 💡 **Quick test**: Use `python tests/test_server.py` to verify your server is working correctly
+> 💡 **Quick test**: Use `python test_server.py` to verify your server is working correctly
 
-> 🚨 **Having setup issues?** See [SETUP_TROUBLESHOOTING.md](SETUP_TROUBLESHOOTING.md) for common solutions!
+> 🚨 **Having setup issues?** See [the workshop guide](WORKSHOP_GUIDE_EN.md) for setup troubleshooting!
 
 ### Visual Testing with MCP Inspector (Optional)
 
@@ -268,26 +277,23 @@ Then restart Claude Desktop and start using your MCP tools!
 ## 📖 Documentation
 
 - **[📘 Complete Workshop Guide](WORKSHOP_GUIDE_EN.md)** - Step-by-step instructions with architecture diagrams
-- **[🎓 Presentation Slides](PRESENTATION_SLIDES_EN.md)** - For instructors teaching this workshop
 - **[🔧 Troubleshooting](WORKSHOP_GUIDE_EN.md#-troubleshooting)** - Common issues and solutions
 
 ---
 
 ## 📁 Repository Structure
 
-```
-You should see this structure:
+The checkout contains these paths:
 
 ```
 Workshop-MCP-Server-Directions-Lab/
 ├── 📄 server_workshop.py           # Main MCP server (STDIO transport)
 ├── 📄 validate_workshop.py         # Validation script
 ├── 📄 test_server.py               # Quick server test (lists tools)
-├── 📄 test_workshop_exercise.py    # Exercise tests
 ├── 📄 requirements.txt             # Python dependencies
 ├── 📄 setup.ps1                    # Automated setup (Windows)
 ├── 📄 setup.sh                     # Automated setup (macOS/Linux)
-├──  scripts/ConfigurationPaths.ps1       # Get paths for Claude Desktop & MCP Inspector
+├──  ConfigurationPaths.ps1       # Get paths for Claude Desktop & MCP Inspector
 ├── 🔒 .env.example                 # Environment template
 ├── 📖 README.md                    # This file
 ├── 📖 QUICK_START_GUIDE.md         # Quick start instructions
@@ -465,7 +471,7 @@ The repository includes **working examples** you can study:
 
 - ✅ **`vendor_analysis` prompt**: Example of adding a new prompt
 - ✅ **`get_currency_exchange_rates` tool**: Example of adding a new tool
-- ✅ **Test suite**: `test_workshop_exercise.py` shows how to validate your additions
+- ✅ **Test suite**: `test_server.py` and `validate_workshop.py` provide local validation entry points
 
 ---
 
@@ -478,7 +484,7 @@ If you encounter problems:
 1. 📖 Review the **Troubleshooting** section in [WORKSHOP_GUIDE_EN.md](WORKSHOP_GUIDE_EN.md)
 2. 🔍 Check logs in Claude Desktop (View → Developer → Developer Tools)
 3. 🌐 Verify credentials if using Business Central
-4. ✅ Run `python tests/validate_workshop.py` to check your setup
+4. ✅ Run `python validate_workshop.py` to check your setup
 
 ### 📚 Learning More
 
